@@ -1,0 +1,40 @@
+IBM ILOG CPLEX Optimization Studio Community Edition.  The CPLEX Optimizers will solve problems up to 1000 variables and 1000 constraints.
+Problem size limit exceeded.
+CP Optimizer Community Edition solves problems with search spaces up to 2^1000.
+Unrestricted version options (including academia) at https://ibm.co/2s0wqSa
+
+
+<<< setup
+
+
+<<< generate
+
+Version identifier: 22.1.2.0 | 2024-12-10 | f4cec290b
+Found incumbent of value 4,000000 after 0,00 sec. (0,00 ticks)
+Tried aggregator 2 times.
+MIP Presolve eliminated 2 rows and 4 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0,00 sec. (0,01 ticks)
+
+Root node processing (before b&c):
+  Real time             =    0,00 sec. (0,01 ticks)
+Parallel b&c, 28 threads:
+  Real time             =    0,00 sec. (0,00 ticks)
+  Sync time (average)   =    0,00 sec.
+  Wait time (average)   =    0,00 sec.
+                          ------------
+Total (root+branch&cut) =    0,00 sec. (0,01 ticks)
+
+<<< solve
+
+
+OBJECTIVE: 6
+Objective = 6
+x =  [1 0 0 1 0 1 1 0]
+
+<<< post process
+
+
+<<< done
+
