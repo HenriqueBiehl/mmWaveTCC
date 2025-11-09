@@ -14,27 +14,37 @@ l0  = float(input())        #Path loss reference
 v   = float(input())        #Attenuation exponent
 Amax = float(input())       #Maximum attenuation
 
-ts_assigment_table = np.empty((n, nts))
-distance_AP = np.empty((n)); 
+# --- conversões ---
+ptx = 10**(ptx/10) / 1000
+gtx = 10**(gtx/10)
+grx = 10**(grx/10)
+l0 = 10**(-l0/10)
+Amax = 10**(Amax/10)
+pn = 10**(pn/10) / 1000
 
+attenuation_str = []
+attenuation_factor = np.zeros((n, nts))
 for i in range(0, n):
-    distance_AP[i] = float(input())
+    attenuation_str.append(input())
+    attenuation_factor[i] = np.fromstring(attenuation_str[i], sep=' ', dtype=np.float64)
 
-# ent = input()
-# for i in range(0, n):
-#     ts_assigment_table[i,:] = np.array(list(map(int, ent.split())))
+print("Attenuation factor:")
+print(attenuation_factor)
+print("")
 
-# print("Assigment table:")
-# print(ts_assigment_table)
-# print("")
+distance_str = []
+distance_AP = np.zeros((n, nts))
+for i in range(0, n):
+    distance_str.append(input())
+    distance_AP[i] = np.fromstring(distance_str[i], sep=' ', dtype=np.float64)
 
-print("Distance from AP:")
+print("Distances from AP:")
 print(distance_AP)
 print("")
 
 print("Simulation parameters:")
 print(f'Bandiwidth: {b:.2f}')
-print(f'Noise Power: {pn:.2f}')
+print(f'Noise Power: {pn:.20f}')
 print(f'Decay Factor: {ro_D:.2f}')
 print(f'Rise Factor: {ro_R:.2f}')
 print(f'Transmitter Power: {ptx:.2f}')
@@ -78,15 +88,23 @@ print("B = " + np.array2string(B, separator=', '))
 print("")
 
 # Vector R
-R = np.zeros((n*nts), dtype=np.float64)
+R = np.zeros((n,nts), dtype=np.float64)
 
-print("R = " + np.array2string(R, separator=', '))
+# Calculate each R
+for i in range(0, n):
+    for j in range(0, nts):
+        prx = (ptx * gtx * grx * l0 * np.power(distance_AP[i][j], -v)) / attenuation_factor[i][j]
+        r = b * np.log2(1 + prx/pn)
+        R[i][j] = r / 1e9
+
+R = R.flatten()
+print("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}))
 print("")
 
 # Write to output file
-# with open("BILP.dat", "w") as file:
-#     file.write("m = " + str(nts+n) + ";\n")
-#     file.write("n = " + str(nts*n) + ";\n")
-#     file.write("A = " + np.array2string(A, separator=', ') + ";\n")
-#     file.write("B = " + np.array2string(B, separator=', ') + ";\n")
-#     file.write("R = " + np.array2string(R, separator=', ') + ";\n")
+with open("BILP.dat", "w") as file:
+    file.write("m = " + str(nts+n) + ";\n")
+    file.write("n = " + str(nts*n) + ";\n")
+    file.write("A = " + np.array2string(A, separator=', ') + ";\n")
+    file.write("B = " + np.array2string(B, separator=', ') + ";\n")
+    file.write("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}) + ";\n")
