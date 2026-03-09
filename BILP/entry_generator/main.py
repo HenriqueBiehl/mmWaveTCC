@@ -4,7 +4,7 @@ nts = int(input())          #Total Timeslots
 n = int(input())            #Total Users
 b = float(input())          #Bandwidth 
 pn = float(input())         #Noise power
-delta_ts = float(input())   #Scheduling time slot lenght
+delta_ts = float(input())   #Scheduling time slot length
 ro_D = float(input())       #Decay factor
 ro_R = float(input())       #Rise factor
 ptx = float(input())        #Transmitter power
@@ -67,11 +67,10 @@ for k in range(1, n+1):
             A[k-1][q-1] = 0
 
 # Last Nts Rows (indices começam em 1 -> 1-based)
-for k in range (n+1, n+nts+1):
-    for q in range (1, (n*nts)+1):
-        if (q == k-n) or (q == k-n+nts): A[k-1][q-1] = 1
+for i in range (n, n+nts):
+    A[i, (i-n)::nts] = 1
 
-print("A = " + np.array2string(A, separator=', '))
+print("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf))
 print("")
 
 # Vector B
@@ -84,7 +83,7 @@ for k in range(1, n+1): B[k-1] = nts/n
 # Last Nts Rows (indices começam em 1 -> 1-based) = 1
 for k in range (n+1, n+nts+1): B[k-1] = 1
 
-print("B = " + np.array2string(B, separator=', '))
+print("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf))
 print("")
 
 # Vector R
@@ -98,13 +97,13 @@ for i in range(0, n):
         R[i][j] = r / 1e9
 
 R = R.flatten()
-print("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}))
+print("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf))
 print("")
 
 # Write to output file
 with open("BILP.dat", "w") as file:
     file.write("m = " + str(nts+n) + ";\n")
     file.write("n = " + str(nts*n) + ";\n")
-    file.write("A = " + np.array2string(A, separator=', ') + ";\n")
-    file.write("B = " + np.array2string(B, separator=', ') + ";\n")
-    file.write("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}) + ";\n")
+    file.write("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
+    file.write("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
+    file.write("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf) + ";\n")
