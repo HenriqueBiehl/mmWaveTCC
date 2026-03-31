@@ -22,7 +22,7 @@
 - `BILP.py`: Executável Python que vai verificar a existência do IBM CPLEX e dos arquivos acima e depois rodar o Otimizador com os dados referenciados, gerando um arquivo de saída `output.txt`
 
 ## 3. Execução ⏯️
-- Execute o arquivo `EntradaBILP.py` e depois dando uma entrada válida ou redirecionando de um arquivo de entrada (`python3 EntradaBILP.py < session-1.txt`), que gerará um novo `BILP.dat`
+- Execute o arquivo `EntradaBILP.py` e depois dando uma entrada válida ou redirecionando de um arquivo de entrada (`python3 EntradaBILP.py < entrada/session-1.txt`), que gerará um novo `BILP.dat`
 - Execute o arquivo `BILP.py` pela linha de comando (`python3 BILP.py`) e agurade a execução do *solver*
 
 ## 4. Por que não usar a IDE do OPL? 🤔
