@@ -72,8 +72,8 @@ for k in range(1, n+1):
 for i in range (n, n+nts):
     A[i, (i-n)::nts] = 1
 
-print("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf))
-print("")
+# print("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf))
+# print("")
 
 # Vector B
 B = np.zeros((n+nts), dtype=np.int64)
@@ -85,8 +85,8 @@ for k in range(1, n+1): B[k-1] = nts/n
 # Last Nts Rows (indices começam em 1 -> 1-based) = 1
 for k in range (n+1, n+nts+1): B[k-1] = 1
 
-print("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf))
-print("")
+# print("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf))
+# print("")
 
 # Vector R
 R = np.zeros((n,nts), dtype=np.float64)
@@ -99,13 +99,14 @@ for i in range(0, n):
         R[i][j] = r / 1e9
 
 R = R.flatten()
-print("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf))
-print("")
+# print("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf))
+# print("")
 
 # Write to output file
 with open("BILP.dat", "w") as file:
     file.write("m = " + str(nts+n) + ";\n")
     file.write("n = " + str(nts*n) + ";\n")
     file.write("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
-    file.write("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
-    file.write("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf) + ";\n")
+    file.write("B = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf) + ";\n")
+
+print("BILP.dat ready!!")
