@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import subprocess, os.path
+import subprocess, os.path, re
 
 OPLRUN_PATH="/opt/ibm/ILOG/CPLEX_Studio_Community2212/opl/bin/x86-64_linux/oplrun"
 MODEL_PATH="./BILP.mod"
@@ -13,4 +13,15 @@ if not os.path.isfile(MODEL_PATH):
 if not os.path.isfile(DATA_PATH):
     raise ValueError("Data file not found")
 
-subprocess.Popen(OPLRUN_PATH + ' ' + MODEL_PATH + ' ' + DATA_PATH + ' > output.txt', shell=True)
+proc = subprocess.Popen(OPLRUN_PATH + ' ' + MODEL_PATH + ' ' + DATA_PATH + ' > output.txt', shell=True)
+proc.wait()
+
+with open("output.txt", "r") as outputTXT:
+    texto = outputTXT.read()
+
+    match = re.search(r'<<< solve(.*?)<<< post process', texto, re.S)
+    resultado = match.group(1).strip()
+    resultado = re.sub(r'^OBJECTIVE:.*\n?', '', resultado, flags=re.MULTILINE)
+
+    if match:
+        print(resultado)

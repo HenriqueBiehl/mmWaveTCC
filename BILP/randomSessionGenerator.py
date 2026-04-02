@@ -22,10 +22,10 @@ with open("session.txt", "w") as sessionFile:
     sessionFile.write(f"{maxAttenuation}\n")
     for i in range(numUsers):
         for j in range(numTimeslots):
-            sessionFile.write(f"{random.randrange(1, maxAttenuation)} ")
+            sessionFile.write(f"{round(random.uniform(1, maxAttenuation), 2)} ")
         sessionFile.write("\n")
 
     for i in range(numUsers):
         for j in range(numTimeslots):
-            sessionFile.write(f"{random.randrange(1, maxDistance)} ")
+            sessionFile.write(f"{round(random.uniform(1, maxDistance), 2)} ")
         sessionFile.write("\n")
