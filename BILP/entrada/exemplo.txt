@@ -1,0 +1,17 @@
+10                                                 #Total Timeslots
+2                                                  #Total Users
+2000000000                                         #Bandwidth
+-71.99                                             #Noise power
+62.5                                               #Scheduling time slot length
+0.2                                                #Decay factor
+6.7                                                #Rise factor
+20                                                 #Transmitter power
+3.16                                               #Transmitter gain
+0                                                  #Receiver gain
+63.4                                               #Path loss reference
+1.72                                               #Attenuation exponent
+100                                                #Maximum attenuation
+1.1 2.2 3.3 4.4 5.5 6.6 7.7 8.8 9.9 10.10          #Atenuacao entre UE e o AP do usuario 1
+10.10 9.9 8.8 7.7 6.6 5.5 4.4 3.3 2.2 1.1          #Atenuacao entre UE e o AP do usuario 2
+1 2 3 4 5 6 7 8 9 10                               #Distancias do UE ate o AP do usuario 1
+10 9 8 7 6 5 4 3 2 1                               #Distancias do UE ate o AP do usuario 2

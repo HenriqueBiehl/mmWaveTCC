@@ -1,4 +1,4 @@
-# BILP Solver Runner
+# BILP Solver
 
 ## 1. Requisitos 🛠️
 - IBM ILOG CPLEX Optimization Studio
@@ -16,12 +16,15 @@
 - Siga as instruções de instalação, SEM ALTERAR O LOCAL PADRÃO DE INSTALAÇÃO (`/opt/ibm/ILOG/CPLEX_Studio_Community2212/`)
 
 ## 2. Arquivos 📁
+- `EntradaBILP.py`: Executável Python que converte os dados de entrada para um formato aceito pelo Solver do BILP
 - `BILP.mod`: Arquivo em OPL (Optimization Programming Language) descrevendo as variáveis contidas na execução do BILP, função objetivo, restrições e saída do programa
 - `BILP.dat`: Arquivo com os dados referentes ao BILP, como os vetores, matriz A, e variáveis para execução do programa
-- `runner.py`: Executável Python que vai verificar a existência do IBM CPLEX e dos arquivos acima e depois rodar o Otimizador com os dados referenciados, gerando um arquivo de saída `output.txt`
+- `BILP.py`: Executável Python que vai verificar a existência do IBM CPLEX e dos arquivos acima e depois rodar o Otimizador com os dados referenciados, gerando um arquivo de saída `output.txt`
+- `randomSessionGenerator.py`: Executável Python que gera um arquivo de sessão distância e atenuação aleatórias para cada usuário dados um número de timeslots, número de usuários, atenuação máxima e distância máxima entre UE-AP
 
 ## 3. Execução ⏯️
-Apenas invoque o arquivo Python pela linha de comando (`./runner.py`) e agurade a execução do *solver*
+- Execute o arquivo `EntradaBILP.py` e depois dando uma entrada válida ou redirecionando de um arquivo de entrada (`python3 EntradaBILP.py < entrada/session-1.txt`), que gerará um novo `BILP.dat`
+- Execute o arquivo `BILP.py` pela linha de comando (`python3 BILP.py`) e agurade a execução do *solver*
 
 ## 4. Por que não usar a IDE do OPL? 🤔
 - Interface desnecessária que apenas consumiria tempo e recursos do sistema, considerando que temos uma alternativa na linha de comando
