@@ -21,7 +21,9 @@ def heuristic_scheduler(rate_u, status_u, allot_u, n, nts):
         metric_u = low_rate_user + allot_u
         mask = allot_u > 0
         valid = np.where(mask)[0]
-        rank_u = valid[np.argsort(valid)[::-1]]
+        metric_u = metric_u[valid]
+        #rank_u = valid[np.argsort(valid)[::-1]]
+        rank_u = np.argsort(metric_u)[::-1]
         for user in rank_u:
             if (status_u[user][ts] == 0) and (allot_u[user] > 0):
                 X_res[user][ts] = 1

@@ -1,0 +1,4 @@
+#Numero timeslot (nts)
+#Numero usuarios (nu)
+#Quantidade de timeslot assinalado para cada usuarios
+#Matrizes de nu x nts com o data rate previsto para cada scheduling

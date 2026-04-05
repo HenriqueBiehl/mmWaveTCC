@@ -1,0 +1,38 @@
+Modelagem para solucao genetica - Contendo 2 scheduling sessions
+
+Entrada:
+    - Matriz contendo o user rates previstos para as scheduling sessions 
+    - Vetor contendo o uso de timeslot (vamos assumir sempre igual para toda Sessao, por enquantos)
+
+Geração População Inicial:
+    - Gerar aleatoriamente 
+        - Gerar X individuos (Testar tamanhos de população iniciais distintas?) 
+            Gerar, para cada Sessao:
+                - Criar copia do uso de timeslot
+                - Criar o vetor de escalonamento onde -1 indica nao usado e qlqr outro valor indica o usuario usando
+                - ter uma lista de timeslot disponiveis
+                - Escolher um usuario dos N aleatoriamente (se ele tiver timeslot disponiveis, usa-lo, se nao, escolher outro) 
+                e escolher um timeslot aleatoriamente dessa lista de timeslot disponiveis (remover da lista) 
+
+    - IDEIA PARA TESTE: usar o algoritmo guloso para criar a população inicial 
+
+Crossover: 
+    - Fazer o escalonamento inicial para 2 scheduling sessions 
+    - Inverter a ordem entre individuos? 
+    - Discutir como implementar mais a fundo 
+
+Mutação:
+    - Escolher 2 timeslots do vetor solucao (dentro de um bloco de scheduling session) e flipar a posciao 
+    dos usuários presentes nele 
+
+Funcao de fitness:
+    - Taxas de transmissao agregada
+
+Avaliação de individuos:
+    - Utilizar as restrições de fairness 
+    - Nesse caso, seria se o uso de timeslot é respeitado por scheduling session 
+    
+Selecionar para a proxima Geração os y melhores por meio de torneio binario
+
+
+
