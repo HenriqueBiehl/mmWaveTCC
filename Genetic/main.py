@@ -50,5 +50,10 @@ print("")
 population = gs.initial_population_random(scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, initial_population, nts, nu)
 
 print("Initial Population:")
-gs.print_population(population, initial_population)
+gs.print_population(population, initial_population, gene_size,  nts)
 print("") 
+
+print("Crossover:")
+new_population = gs.crossover(population, gene_size, initial_population)
+gs.print_population(new_population, initial_population, gene_size, nts)
+print("")

@@ -31,8 +31,54 @@ def initial_population_random(scheduling_sessions, usage_constraint, gene_size, 
     return np.array(population)
 
 
-def print_population(population, population_size):
+def print_population(population, population_size, gene_size, dna):
 
     for i in range(0, population_size):
-        print(f'ind{i}:\n{population[i]}')
+        print(f'ind{i}:')
+
+        for j in range(0, gene_size):
+            
+            for k in range (0, dna):
+                #for l in range()
+                #print(f'{i},  {j}, {k} -  {population[i][j]} \n {population[i][j][0][0][k]}')
+                print(f'{int(population[i][j][0][0][k]): >4} |', end="")
+            print("")
+            for k in range (0, dna):
+                print(f'{population[i][j][0][1][k]:.2f} |', end="")
+
+            print("")
+        
         print("")
+
+
+def crossover(population, gene_size, population_size):
+    new_population = []
+    
+    for _ in range(0, population_size):
+
+        a = rand.randint(0, population_size-1)
+        b = rand.randint(0, population_size-1)
+
+        a_gene_heritage = gene_size - 1
+        b_gene_heritage = gene_size - 1
+        
+        child = []
+
+        for i in range(0, gene_size):
+
+            parent_gene = rand.randint(0,1)
+
+            if(parent_gene == 0 and a_gene_heritage != 0):
+                child.append(population[a][i])
+                a_gene_heritage -= 1
+            elif (b_gene_heritage != 0):
+                child.append(population[b][i])
+                b_gene_heritage -= 1 
+            else:
+                child.append(population[a][i])
+                a_gene_heritage -= 1
+
+
+        new_population.append(child)
+
+    return np.array(new_population)
