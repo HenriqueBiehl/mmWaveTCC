@@ -39,8 +39,6 @@ def print_population(population, population_size, gene_size, dna):
         for j in range(0, gene_size):
             
             for k in range (0, dna):
-                #for l in range()
-                #print(f'{i},  {j}, {k} -  {population[i][j]} \n {population[i][j][0][0][k]}')
                 print(f'{int(population[i][j][0][0][k]): >4} |', end="")
             print("")
             for k in range (0, dna):
