@@ -49,10 +49,25 @@ def print_population(population, population_size, gene_size, dna):
         print("")
 
 
-def crossover(population, gene_size, population_size):
+def crossover(population, elitism_rate, gene_size, population_size, dna):
+    from operator import itemgetter
+
     new_population = []
-    
-    for _ in range(0, population_size):
+
+    # Elitismo seleciona elitism_rate% da população para continuar igual na proxima geracao
+    elite_size = int(elitism_rate * population_size)
+    fitness_values = []
+    for i in range(0, population_size):
+        fitness_values.append({"pos": i, "fitness": fitness(population[i], gene_size, dna)})
+    fitness_values.sort(key=itemgetter('fitness'))
+    fitness_values.reverse()
+    elite = fitness_values[:elite_size]
+
+    for e in elite:
+        new_population.append(population[e["pos"]])
+
+    # Gera novos individuos mantendo o tamanho da população inicial
+    for _ in range(0, population_size-elite_size):
 
         a = rand.randint(0, population_size-1)
         b = rand.randint(0, population_size-1)
@@ -80,3 +95,12 @@ def crossover(population, gene_size, population_size):
         new_population.append(child)
 
     return np.array(new_population)
+
+# Calcula fitness somando os User Rates a cada timeslot
+def fitness(individual, gene_size, dna):
+    f = 0.0
+    for i in range(0, gene_size):
+        for k in range (0, dna):
+            f += individual[i][0][1][k]
+
+    return f
