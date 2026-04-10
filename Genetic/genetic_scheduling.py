@@ -104,3 +104,32 @@ def fitness(individual, gene_size, dna):
             f += individual[i][0][1][k]
 
     return f
+
+# Mutação que ocorre trocando duas sessões de lugar
+def session_mutation(population, scheduling_sessions, mutation_rate, gene_size, population_size, dna):
+    new_population = population.copy()
+
+    for i in range(population_size):
+        r = rand.uniform(0, 1)
+        if r < mutation_rate:
+            # print(f'ind{i} mutates with {r}')
+
+            # Sessoes A e B vão trocar de lugar
+            a = rand.randrange(0, gene_size)
+            b = rand.randrange(0, gene_size)
+            while a == b:
+                b = rand.randrange(0, gene_size)
+            
+            tmp = new_population[i][a][0][0].copy()
+            new_population[i][a][0][0] = new_population[i][b][0][0].copy()
+            new_population[i][b][0][0] = tmp
+
+            # Encontra rates novas das sessões trocadas
+            for j in range(dna):
+                user_a = int(new_population[i][a][0][0][j])
+                user_b = int(new_population[i][b][0][0][j])
+
+                new_population[i][a][0][1][j] = scheduling_sessions[a][user_a][j]
+                new_population[i][b][0][1][j] = scheduling_sessions[b][user_b][j]
+
+    return np.array(new_population)

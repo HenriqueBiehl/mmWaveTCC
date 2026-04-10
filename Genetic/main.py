@@ -57,3 +57,8 @@ print("Crossover:")
 new_population = gs.crossover(population, 0.5, gene_size, initial_population, nts)
 gs.print_population(new_population, initial_population, gene_size, nts)
 print("")
+
+print("Mutation (Session):")
+new_population = gs.session_mutation(new_population, scheduling_sesssions, 0.3, gene_size, initial_population, nts)
+gs.print_population(new_population, initial_population, gene_size, nts)
+print("")
