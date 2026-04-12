@@ -107,6 +107,7 @@ with open("BILP.dat", "w") as file:
     file.write("m = " + str(nts+n) + ";\n")
     file.write("n = " + str(nts*n) + ";\n")
     file.write("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
-    file.write("B = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf) + ";\n")
+    file.write("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
+    file.write("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf) + ";\n")
 
 print("BILP.dat ready!!")
