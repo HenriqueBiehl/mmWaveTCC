@@ -2,7 +2,7 @@
 
 import subprocess, os.path, re
 
-OPLRUN_PATH="/opt/ibm/ILOG/CPLEX_Studio_Community2212/opl/bin/x86-64_linux/oplrun"
+OPLRUN_PATH="/opt/ibm/ILOG/CPLEX_Studio2212/opl/bin/x86-64_linux/oplrun"
 MODEL_PATH="./BILP.mod"
 DATA_PATH="./BILP.dat"
 
