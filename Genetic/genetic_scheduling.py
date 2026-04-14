@@ -49,7 +49,21 @@ def print_population(population, population_size, gene_size, dna):
         print("")
 
 
-def crossover(population, elitism_rate, gene_size, population_size, dna):
+def roulette_selection(population, population_size, gene_size, dna):
+    total_fitness = 0.0
+    for p in population:
+        total_fitness += fitness(p, gene_size, dna)
+    
+    spin = rand.uniform(0, total_fitness)
+    cumulative = 0.0
+
+    for i in range(population_size):
+        cumulative += fitness(population[i], gene_size, dna)
+        if spin < cumulative:
+            return i
+
+
+def crossover(population, elitism_rate, gene_size, population_size, dna, selection_type):
     from operator import itemgetter
 
     new_population = []
@@ -68,10 +82,22 @@ def crossover(population, elitism_rate, gene_size, population_size, dna):
 
     # Gera novos individuos mantendo o tamanho da população inicial
     for _ in range(0, population_size-elite_size):
+        if selection_type == "random":
+            a = rand.randint(0, population_size-1)
+            b = rand.randint(0, population_size-1)
 
-        a = rand.randint(0, population_size-1)
-        b = rand.randint(0, population_size-1)
+            while a == b:
+                b = rand.randint(0, population_size-1)
 
+        elif selection_type == "roulette":
+            a = roulette_selection(population, population_size, gene_size, dna)
+            b = roulette_selection(population, population_size, gene_size, dna)
+
+            while a == b:
+                b = roulette_selection(population, population_size, gene_size, dna)
+
+        # print(f"Crossover {a} e {b}")
+        
         a_gene_heritage = gene_size - 1
         b_gene_heritage = gene_size - 1
         
