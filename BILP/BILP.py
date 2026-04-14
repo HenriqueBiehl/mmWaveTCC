@@ -19,14 +19,13 @@ proc.wait()
 with open("output.txt", "r") as outputTXT:
     texto = outputTXT.read()
 
-    match = re.search(r'<<< solve(.*?)<<< post process', texto, re.S)
-    
-    if not match:
-        print("ERRO!!!!! Cheque output.txt")
-        exit(0)
-
-    resultado = match.group(1).strip()
-    resultado = re.sub(r'^OBJECTIVE:.*\n?', '', resultado, flags=re.MULTILINE)
+    match = re.search(r'Objective\s*=\s*([^\n]+).*?x\s*=\s*(\[[^\]]+\])', texto, re.S)
 
     if match:
-        print(resultado)
+        objective = match.group(1)
+        x = match.group(2)
+
+        print("Objective =", objective)
+        print("x =", x)
+    else:
+        print("ERRO!!!!! Cheque output.txt")
