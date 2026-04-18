@@ -78,4 +78,7 @@ for i in range(num_generations):
 # print("")
 
 print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-print(f"\t{max_user[0][0][0]}{max_user[1][0][0]}")
+print("\t", end="")
+for i in range(gene_size):
+    print(f"{max_user[i][0][0]}", end="")
+print("")
