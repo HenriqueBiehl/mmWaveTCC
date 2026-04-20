@@ -53,14 +53,55 @@ def print_individual(individual, gene_size, dna):
         print("")
 
 
-def crossover(population, gene_size, population_size):
-    new_population = []
+def roulette_selection(population, population_size, gene_size, dna):
+    total_fitness = 0.0
+    for p in population:
+        total_fitness += fitness(p, gene_size, dna)
     
-    for _ in range(0, population_size):
+    spin = rand.uniform(0, total_fitness)
+    cumulative = 0.0
 
-        a = rand.randint(0, population_size-1)
-        b = rand.randint(0, population_size-1)
+    for i in range(population_size):
+        cumulative += fitness(population[i], gene_size, dna)
+        if spin < cumulative:
+            return i
 
+
+def crossover(population, elitism_rate, gene_size, population_size, dna, selection_type):
+    from operator import itemgetter
+
+    new_population = []
+
+    # Elitismo seleciona elitism_rate% da população para continuar igual na proxima geracao
+    elite_size = int(elitism_rate * population_size)
+    fitness_values = []
+    for i in range(0, population_size):
+        fitness_values.append({"pos": i, "fitness": fitness(population[i], gene_size, dna)})
+    fitness_values.sort(key=itemgetter('fitness'))
+    fitness_values.reverse()
+    elite = fitness_values[:elite_size]
+
+    for e in elite:
+        new_population.append(population[e["pos"]])
+
+    # Gera novos individuos mantendo o tamanho da população inicial
+    for _ in range(0, population_size-elite_size):
+        if selection_type == "random":
+            a = rand.randint(0, population_size-1)
+            b = rand.randint(0, population_size-1)
+
+            while a == b:
+                b = rand.randint(0, population_size-1)
+
+        elif selection_type == "roulette":
+            a = roulette_selection(population, population_size, gene_size, dna)
+            b = roulette_selection(population, population_size, gene_size, dna)
+
+            while a == b:
+                b = roulette_selection(population, population_size, gene_size, dna)
+
+        # print(f"Crossover {a} e {b}")
+        
         a_gene_heritage = gene_size - 1
         b_gene_heritage = gene_size - 1
         
@@ -85,6 +126,43 @@ def crossover(population, gene_size, population_size):
 
     return np.array(new_population)
 
+# Calcula fitness somando os User Rates a cada timeslot
+def fitness(individual, gene_size, dna):
+    f = 0.0
+    for i in range(0, gene_size):
+        for k in range (0, dna):
+            f += individual[i][0][1][k]
+
+    return f
+
+# Mutação que ocorre trocando duas sessões de lugar
+def session_mutation(population, scheduling_sessions, mutation_rate, gene_size, population_size, dna):
+    new_population = population.copy()
+
+    for i in range(population_size):
+        r = rand.uniform(0, 1)
+        if r < mutation_rate:
+            # print(f'ind{i} mutates with {r}')
+
+            # Sessoes A e B vão trocar de lugar
+            a = rand.randrange(0, gene_size)
+            b = rand.randrange(0, gene_size)
+            while a == b:
+                b = rand.randrange(0, gene_size)
+            
+            tmp = new_population[i][a][0][0].copy()
+            new_population[i][a][0][0] = new_population[i][b][0][0].copy()
+            new_population[i][b][0][0] = tmp
+
+            # Encontra rates novas das sessões trocadas
+            for j in range(dna):
+                user_a = int(new_population[i][a][0][0][j])
+                user_b = int(new_population[i][b][0][0][j])
+
+                new_population[i][a][0][1][j] = scheduling_sessions[a][user_a][j]
+                new_population[i][b][0][1][j] = scheduling_sessions[b][user_b][j]
+
+    return np.array(new_population)
 
 def mutation_operator(population, population_size, gene_size, predicted_rates, dna, mutation_type):
 
