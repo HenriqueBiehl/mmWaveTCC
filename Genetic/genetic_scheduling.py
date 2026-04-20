@@ -36,19 +36,19 @@ def print_population(population, population_size, gene_size, dna):
     for i in range(0, population_size):
         print(f'ind{i}:')
         
-        print_individual(population, gene_size, dna, i)
+        print_individual(population[i], gene_size, dna)
         
         print("")
 
-def print_individual(population, gene_size, dna, i):
+def print_individual(individual, gene_size, dna):
 
     for j in range(0, gene_size):
     
         for k in range (0, dna):
-            print(f'{int(population[i][j][0][0][k]): >4} |', end="")
+            print(f'{int(individual[j][0][0][k]): >4} |', end="")
         print("")
         for k in range (0, dna):
-            print(f'{population[i][j][0][1][k]:.2f} |', end="")
+            print(f'{individual[j][0][1][k]:.2f} |', end="")
 
         print("")
 
@@ -103,15 +103,25 @@ def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
 
     timeslot_a = rand.randint(0, dna - 1)
     timeslot_b = rand.randint(0, dna - 1)
-    while(timeslot_a == timeslot_b):
+    while(timeslot_a == timeslot_b ):
         timeslot_b = rand.randint(0, dna - 1)
 
-    individual[0][mutated_gene][0][timeslot_a] = predicted_rates[mutated_gene][0][timeslot_b]
-    individual[0][mutated_gene][1][timeslot_a] = predicted_rates[mutated_gene][1][timeslot_b]
+    user_a = int(individual[mutated_gene][0][0][timeslot_a])
+    user_b = int(individual[mutated_gene][0][0][timeslot_b])
 
-    individual[0][mutated_gene][0][timeslot_b] = predicted_rates[mutated_gene][0][timeslot_a]
-    individual[0][mutated_gene][1][timeslot_b] = predicted_rates[mutated_gene][1][timeslot_a]
 
+    new_rate_a = predicted_rates[mutated_gene][user_a][timeslot_b]
+    new_rate_b = predicted_rates[mutated_gene][user_b][timeslot_a]
+    #print( individual[mutated_gene][0])
+    #print(f'    gene: {mutated_gene} | ta: {timeslot_a} | tb: {timeslot_b}')
+    #print(f'    {user_a} and {user_b}')
+    #print(f'    a: {predicted_rates[mutated_gene][user_a][timeslot_a]} b:{predicted_rates[mutated_gene][user_b][timeslot_b]}')
+
+    individual[mutated_gene][0][0][timeslot_a] = user_b
+    individual[mutated_gene][0][1][timeslot_a] = new_rate_b
+
+    individual[mutated_gene][0][0][timeslot_b] = user_a
+    individual[mutated_gene][0][1][timeslot_b] = new_rate_a
 
     return 
 

@@ -65,8 +65,8 @@ print("")
 
 print("Mutation by Timeslot Swap")
 index = gs.mutation_operator(new_population, initial_population, gene_size, scheduling_sesssions, nts, gs.mutation_swap_timeslot)
-print(f'ind{index}:')
-gs.print_individual(new_population, gene_size, nts, index)
+print(f'new ind{index}:')
+gs.print_individual(new_population[index], gene_size, nts)
 print("")
 
 
