@@ -82,3 +82,21 @@ print("\t", end="")
 for i in range(gene_size):
     print(f"{max_user[i][0][0]}", end="")
 print("")
+print(population)
+print("")
+
+
+print("Crossover:")
+new_population = gs.crossover(population, gene_size, initial_population)
+gs.print_population(new_population, initial_population, gene_size, nts)
+print("")
+
+
+print("Mutation by Timeslot Swap")
+index = gs.mutation_operator(new_population, initial_population, gene_size, scheduling_sesssions, nts, gs.mutation_swap_timeslot)
+print(f'new ind{index}:')
+gs.print_individual(new_population[index], gene_size, nts)
+print("")
+
+
+
