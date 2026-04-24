@@ -1,5 +1,7 @@
 import numpy as np 
 import random as rand
+from operator import itemgetter
+
 
 def initial_population_random(scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
     
@@ -40,6 +42,7 @@ def print_population(population, population_size, gene_size, dna):
         
         print("")
 
+
 def print_individual(individual, gene_size, dna):
 
     for j in range(0, gene_size):
@@ -67,9 +70,23 @@ def roulette_selection(population, population_size, gene_size, dna):
             return i
 
 
-def crossover(population, elitism_rate, gene_size, population_size, dna, selection_type):
-    from operator import itemgetter
+def tournament_selection(population, population_size, gene_size, dna, tournament_size):
 
+    population_sample_index = rand.sample(range(0, population_size), tournament_size)
+    population_sample = [population[i] for i in population_sample_index]
+
+
+    fitness_values = []
+    for i in range(0, len(population_sample_index)):
+        fitness_values.append({"pos": population_sample_index[i], "fitness": fitness(population_sample[i], gene_size, dna)})
+    fitness_values.sort(key=itemgetter('fitness'))
+    fitness_values.reverse()
+
+    return fitness_values[0]["pos"]
+
+
+def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type):
+ 
     new_population = []
 
     # Elitismo seleciona elitism_rate% da população para continuar igual na proxima geracao
@@ -100,6 +117,13 @@ def crossover(population, elitism_rate, gene_size, population_size, dna, selecti
             while a == b:
                 b = roulette_selection(population, population_size, gene_size, dna)
 
+        elif selection_type == "tournament":
+            a = tournament_selection(population, population_size, gene_size, dna, tournament_size)
+            b = tournament_selection(population, population_size, gene_size, dna, tournament_size)
+
+            while a == b:
+                b = tournament_selection(population, population_size, gene_size, dna, tournament_size)
+
         # print(f"Crossover {a} e {b}")
         
         a_gene_heritage = gene_size - 1
@@ -126,6 +150,7 @@ def crossover(population, elitism_rate, gene_size, population_size, dna, selecti
 
     return np.array(new_population)
 
+
 # Calcula fitness somando os User Rates a cada timeslot
 def fitness(individual, gene_size, dna):
     f = 0.0
@@ -134,6 +159,7 @@ def fitness(individual, gene_size, dna):
             f += individual[i][0][1][k]
 
     return f
+
 
 # Mutação que ocorre trocando duas sessões de lugar
 def session_mutation(population, scheduling_sessions, mutation_rate, gene_size, population_size, dna):
@@ -164,15 +190,28 @@ def session_mutation(population, scheduling_sessions, mutation_rate, gene_size, 
 
     return np.array(new_population)
 
-def mutation_operator(population, population_size, gene_size, predicted_rates, dna, mutation_type):
 
-    index = rand.randint(0,population_size -1)
-    individual = population[index]
+# Mutação que ocorre trocando duas timeslots de uma seção de lugar
+def timeslot_mutation(population, scheduling_sessions, mutation_rate, gene_size, population_size, dna):
+    new_population = population.copy()
 
-    mutation_type(individual, predicted_rates, gene_size, dna)
+    for i in range(population_size):
+        r = rand.uniform(0, 1)
+        if r < mutation_rate:
+            mutation_swap_timeslot(new_population[i], scheduling_sessions,  gene_size, dna) 
 
-    return index
+    return np.array(new_population)
 
+
+
+# def mutation_operator(population, population_size, gene_size, predicted_rates, dna, mutation_type):
+
+#     index = rand.randint(0,population_size -1)
+#     individual = population[index]
+
+#     mutation_type(individual, predicted_rates, gene_size, dna)
+
+#     return index
 
 
 def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
@@ -202,8 +241,3 @@ def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
     individual[mutated_gene][0][1][timeslot_b] = new_rate_a
 
     return 
-
-
-
-
-
