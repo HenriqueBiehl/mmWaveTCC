@@ -1,3 +1,4 @@
+#Numero de genes
 #Numero timeslot (nts)
 #Numero usuarios (nu)
 #Quantidade de timeslot assinalado para cada usuarios

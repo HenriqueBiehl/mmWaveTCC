@@ -1,0 +1,3 @@
+#Numero de genes
+#Numero timeslot (nts)
+#Numero usuarios (nu)

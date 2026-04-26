@@ -44,7 +44,7 @@ def print_population(population, population_size, gene_size, dna):
 
 
 def print_individual(individual, gene_size, dna):
-
+    
     for j in range(0, gene_size):
     
         for k in range (0, dna):
@@ -53,7 +53,7 @@ def print_individual(individual, gene_size, dna):
         for k in range (0, dna):
             print(f'{individual[j][0][1][k]:.2f} |', end="")
 
-        print("")
+        print("\n")
 
 
 def roulette_selection(population, population_size, gene_size, dna):
