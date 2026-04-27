@@ -3,7 +3,7 @@ import sys
 import genetic_scheduling as gs
 
 gene_size = 2
-initial_population = 5
+initial_population = 500
 num_generations = 100
 elitism_rate = 0.2
 mutation_rate = 0.2
@@ -62,18 +62,17 @@ for i in range(num_generations):
     new_population = gs.crossover(population, elitism_rate, gene_size, initial_population, nts, "roulette")
     new_population = gs.session_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, initial_population, nts)
 
-    for j in range(initial_population):
-        f = gs.fitness(new_population[j], gene_size, nts)
-        if f > max_fit:
-            max_fit = f
-            max_user = new_population[j]
-
     population = new_population.copy()
 
 # print("Final Population:")
 # gs.print_population(new_population, initial_population, gene_size,  nts)
 # print("")
 
+for j in range(initial_population):
+    f = gs.fitness(population[j])
+    if f > max_fit:
+        max_fit = f
+        max_user = population[j]
 print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
 # print("\t", end="")
 # for i in range(gene_size):
