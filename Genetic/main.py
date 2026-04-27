@@ -4,7 +4,7 @@ import genetic_scheduling as gs
 
 gene_size = 2
 initial_population = 5
-num_generations = 1000
+num_generations = 100
 elitism_rate = 0.2
 mutation_rate = 0.2
 
@@ -52,9 +52,9 @@ print("")
 
 population = gs.initial_population_random(scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, initial_population, nts, nu)
 
-print("Initial Population:")
-gs.print_population(population, initial_population, gene_size,  nts)
-print("")
+# print("Initial Population:")
+# gs.print_population(population, initial_population, gene_size,  nts)
+# print("")
 
 max_fit = 0.0
 max_user = []
@@ -75,7 +75,7 @@ for i in range(num_generations):
 # print("")
 
 print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-print("\t", end="")
-for i in range(gene_size):
-    print(f"{max_user[i][0][0]}", end="")
-print("")
+# print("\t", end="")
+# for i in range(gene_size):
+#     print(f"{max_user[i][0][0]}", end="")
+# print("")
