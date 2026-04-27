@@ -70,9 +70,6 @@ for i in range(num_generations):
 
     population = new_population.copy()
 
-    # print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-    # print(f"\t{max_user[0][0][0]}{max_user[1][0][0]}")
-
 # print("Final Population:")
 # gs.print_population(new_population, initial_population, gene_size,  nts)
 # print("")
