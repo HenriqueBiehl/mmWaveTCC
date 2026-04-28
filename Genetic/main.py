@@ -2,8 +2,9 @@ import numpy as np
 import sys
 import genetic_scheduling as gs
 
-initial_population = 5
-num_generations = 5
+gene_size = 2
+initial_population = 500
+num_generations = 100
 elitism_rate = 0.2
 tournament_size = 2
 mutation_rate = 0.2
@@ -54,9 +55,9 @@ print("")
 population = gs.initial_population_random(scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, initial_population, nts, nu)
 population_copy = population.copy()
 
-print("Initial Population:")
-gs.print_population(population, initial_population, gene_size,  nts)
-print("")
+# print("Initial Population:")
+# gs.print_population(population, initial_population, gene_size,  nts)
+# print("")
 
 print("Crossover using Roulette and Session Swap Mutation")
 print("\n")
@@ -66,81 +67,19 @@ for i in range(num_generations):
     new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, initial_population, nts, "roulette")
     new_population = gs.session_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, initial_population, nts)
 
-    for j in range(initial_population):
-        f = gs.fitness(new_population[j], gene_size, nts)
-        if f > max_fit:
-            max_fit = f
-            max_user = new_population[j]
-
     population = new_population.copy()
-
-    # print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-    # print(f"\t{max_user[0][0][0]}{max_user[1][0][0]}")
 
 # print("Final Population:")
 # gs.print_population(new_population, initial_population, gene_size,  nts)
 # print("")
 
+for j in range(initial_population):
+    f = gs.fitness(population[j])
+    if f > max_fit:
+        max_fit = f
+        max_user = population[j]
 print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-print("\t", end="")
-for i in range(gene_size):
-    gs.print_individual(max_user, gene_size, nts)
-print("")
-#gs.print_population(new_population, initial_population, gene_size, nts)
-print("")
-
-population = population_copy.copy()
-
-print("Crossover using Tournament and Timeslot Swap Mutation")
-print("\n")
-
-max_fit = 0.0
-max_user = []
-for i in range(num_generations):
-    new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, initial_population, nts, "tournament")
-    new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, initial_population, nts)
-
-    for j in range(initial_population):
-        f = gs.fitness(new_population[j], gene_size, nts)
-        if f > max_fit:
-            max_fit = f
-            max_user = new_population[j]
-
-    population = new_population.copy()
-
-    # print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-    # print(f"\t{max_user[0][0][0]}{max_user[1][0][0]}")
-
-# print("Final Population:")
-# gs.print_population(new_population, initial_population, gene_size,  nts)
+# print("\t", end="")
+# for i in range(gene_size):
+#     print(f"{max_user[i][0][0]}", end="")
 # print("")
-
-print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
-print("\t", end="")
-for i in range(gene_size):
-    gs.print_individual(max_user, gene_size, nts)
-print("")
-#gs.print_population(new_population, initial_population, gene_size, nts)
-print("")
-
-
-
-# print("Crossover Roulette:")
-# new_population = gs.crossover(population, elitism_rate, tournament_size, gene_size, initial_population, nts, "roulette")
-# gs.print_population(new_population, initial_population, gene_size, nts)
-# print("")
-
-# print("Crossover Tournament:")
-# new_population = gs.crossover(population, elitism_rate, tournament_size, gene_size, initial_population, nts, "tournament")
-# gs.print_population(new_population, initial_population, gene_size, nts)
-# print("")
-
-
-# print("Mutation by Timeslot Swap")
-# index = gs.mutation_operator(new_population, initial_population, gene_size, scheduling_sesssions, nts, gs.mutation_swap_timeslot)
-# print(f'new ind{index}:')
-# gs.print_individual(new_population[index], gene_size, nts)
-# print("")
-
-
-
