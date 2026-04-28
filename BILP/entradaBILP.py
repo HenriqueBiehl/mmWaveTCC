@@ -57,24 +57,6 @@ print(f'Attenuation Exponent: {v:.2f}')
 print(f'Maximum Attenuation: {Amax:.2f}')
 print("")
 
-# Matrix A
-A = np.zeros((n+nts, n*nts), dtype=np.int64)
-
-# First Nu rows (indices começam em 1 -> 1-based)
-for k in range(1, n+1):
-    for q in range(1, (n*nts)+1):
-        if ((q > (k-1)*nts) and (q <= k*nts)):
-            A[k-1][q-1] = 1
-        else:
-            A[k-1][q-1] = 0
-
-# Last Nts Rows (indices começam em 1 -> 1-based)
-for i in range (n, n+nts):
-    A[i, (i-n)::nts] = 1
-
-# print("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf))
-# print("")
-
 # Vector B
 B = np.zeros((n+nts), dtype=np.int64)
 
@@ -104,9 +86,8 @@ R = R.flatten()
 
 # Write to output file
 with open("BILP.dat", "w") as file:
-    file.write("m = " + str(nts+n) + ";\n")
-    file.write("n = " + str(nts*n) + ";\n")
-    file.write("A = " + np.array2string(A, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
+    file.write("nu = " + str(n) + ";\n")
+    file.write("nts = " + str(nts) + ";\n")
     file.write("B = " + np.array2string(B, separator=', ', threshold=np.inf, max_line_width=np.inf) + ";\n")
     file.write("R = " + np.array2string(R, separator=', ', formatter={'float_kind':lambda x: f"{x:.2f}"}, threshold=np.inf, max_line_width=np.inf) + ";\n")
 
