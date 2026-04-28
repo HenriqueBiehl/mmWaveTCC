@@ -38,18 +38,23 @@ for root, dirs, files in os.walk(folderPath, topdown=True):
                 if s.replace('.', '').isdigit():
                     ratePerUser.append(s)
 
-with open("convert_out.txt", "w") as outFile:
-    outFile.write(f"{nts}\n")
-    outFile.write(f"{nu}\n")
-    for usr in tsPerUser:
-        outFile.write(f"{usr} ")
-    outFile.write("\n")
+if numFiles > 0:
+    with open("convert_out.txt", "w") as outFile:
+        outFile.write(f"{numFiles}\n")
+        outFile.write(f"{nts}\n")
+        outFile.write(f"{nu}\n")
+        for usr in tsPerUser:
+            outFile.write(f"{usr} ")
+        outFile.write("\n")
 
-    arr = np.array(ratePerUser).reshape(numFiles, nu, nts)
+        arr = np.array(ratePerUser).reshape(numFiles, nu, nts)
 
-    for k in range(numFiles):
-        for i in range(nu):
-            for j in range(nts):
-                outFile.write(f"{arr[k][i][j]} ")
-            outFile.write("\n")
-        outFile.write("")
+        for k in range(numFiles):
+            for i in range(nu):
+                for j in range(nts):
+                    outFile.write(f"{arr[k][i][j]} ")
+                outFile.write("\n")
+            outFile.write("")
+else:
+    print("ERRO!!! Diretorio nao existe ou nao possui arquivos!!")
+    exit(0)

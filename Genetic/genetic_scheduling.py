@@ -78,7 +78,7 @@ def tournament_selection(population, population_size, gene_size, dna, tournament
 
     fitness_values = []
     for i in range(0, len(population_sample_index)):
-        fitness_values.append({"pos": population_sample_index[i], "fitness": fitness(population_sample[i], gene_size, dna)})
+        fitness_values.append({"pos": population_sample_index[i], "fitness": fitness(population_sample[i])})
     fitness_values.sort(key=itemgetter('fitness'))
     fitness_values.reverse()
 
