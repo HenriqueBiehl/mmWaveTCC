@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import genetic_scheduling as gs
 
-population_size = 5
+population_size = 10
 num_generations = 50
 elitism_rate = 0.2
 tournament_size = 3
