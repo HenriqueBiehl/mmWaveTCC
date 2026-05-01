@@ -85,7 +85,7 @@ def tournament_selection(population, population_size, gene_size, dna, tournament
     return fitness_values[0]["pos"]
 
 
-def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type):
+def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type, crossover_type):
  
     new_population = []
 
@@ -125,31 +125,100 @@ def crossover(population, elitism_rate, tournament_size, gene_size, population_s
             while a == b:
                 b = tournament_selection(population, population_size, gene_size, dna, tournament_size)
 
-        # print(f"Crossover {a} e {b}")
-        
-        a_gene_heritage = gene_size - 1
-        b_gene_heritage = gene_size - 1
-        
-        child = []
 
-        for i in range(0, gene_size):
-
-            parent_gene = rand.randint(0,1)
-
-            if(parent_gene == 0 and a_gene_heritage != 0):
-                child.append(population[a][i])
-                a_gene_heritage -= 1
-            elif (b_gene_heritage != 0):
-                child.append(population[b][i])
-                b_gene_heritage -= 1 
-            else:
-                child.append(population[a][i])
-                a_gene_heritage -= 1
-
+        if(crossover_type == "uniform"):
+            child = uniform_crossover(a, b, population, gene_size)
+        elif(crossover_type == "one-point"):
+            child = one_point_crossover(a, b, population, gene_size)
+        elif(crossover_type == "two-point"):
+            child = two_point_crossover(a, b, population, gene_size)
 
         new_population.append(child)
 
     return np.array(new_population)
+
+
+def uniform_crossover(a, b, population, gene_size):
+    a_gene_heritage = gene_size - 1
+    b_gene_heritage = gene_size - 1
+    
+    child = []
+
+    for i in range(0, gene_size):
+
+        parent_gene = rand.randint(0,1)
+
+        if(parent_gene == 0 and a_gene_heritage != 0):
+            child.append(population[a][i])
+            a_gene_heritage -= 1
+        elif (b_gene_heritage != 0):
+            child.append(population[b][i])
+            b_gene_heritage -= 1 
+        else:
+            child.append(population[a][i])
+            a_gene_heritage -= 1
+    
+    return child
+
+
+def one_point_crossover(a, b, population, gene_size):
+    child1 = []
+    child2 = []
+
+    crossover_point = rand.randint(0, gene_size-1)
+
+    mask1 = [0]*gene_size
+    mask2 = [1]*gene_size
+
+    for i in range(crossover_point, gene_size):
+        mask1[i] = 1
+        mask2[i] = 0
+    
+    for i in range(0, gene_size):
+        gene_child1 = a if mask1[i] == 0 else b
+        gene_child2 = a if mask2[i] == 0 else b
+
+        child1.append(population[gene_child1][i])
+        child2.append(population[gene_child2][i])
+
+    fitness_child1 = fitness(child1)
+    fitness_child2 = fitness(child2)
+
+    if(fitness_child1 >= fitness_child2):
+        return child1
+    
+    return child2
+
+
+def two_point_crossover(a, b, population, gene_size):
+    child1 = []
+    child2 = []
+
+    crossover_point_1 = rand.randint(0, gene_size-1)
+    crossover_point_2 = rand.randint(crossover_point_1, gene_size-1)
+
+    mask1 = [0]*gene_size
+    mask2 = [1]*gene_size
+
+
+    for i in range(crossover_point_1, crossover_point_2):
+        mask1[i] = 1
+        mask2[i] = 0
+    
+    for i in range(0, gene_size):
+        gene_child1 = a if mask1[i] == 0 else b
+        gene_child2 = a if mask2[i] == 0 else b
+
+        child1.append(population[gene_child1][i])
+        child2.append(population[gene_child2][i])
+
+    fitness_child1 = fitness(child1)
+    fitness_child2 = fitness(child2)
+
+    if(fitness_child1 >= fitness_child2):
+        return child1
+    
+    return child2
 
 
 # Calcula fitness somando os User Rates a cada timeslot
@@ -238,3 +307,63 @@ def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
     individual[mutated_gene][0][1][timeslot_b] = new_rate_a
 
     return 
+
+def collect_generation_metadata(generation_metadata, population, population_size):
+        
+    max_fit = 0.0
+    avarege_fit = 0.0
+    lowest_fit = 10000000000000.0
+    for j in range(population_size):
+        f = fitness(population[j])
+
+        avarege_fit += f
+        
+        if f > max_fit:
+            max_fit = f
+        if f < lowest_fit:
+            lowest_fit = f 
+
+    avarege_fit /= population_size
+
+    gen_metadata = {"max": max_fit, "low": lowest_fit, "avg": avarege_fit}
+    generation_metadata.append(gen_metadata)
+
+
+def print_generation_metadata(generation_metadata, num_generations):
+
+    for i in range(num_generations):
+        gen_meta = generation_metadata[i]
+        print(f"gen-{i}:")
+        print_one_generation(gen_meta)
+
+
+def print_one_generation(gen_meta):
+    print(f"    max     fitness:{gen_meta['max']:.2f}")
+    print(f"    lowest  fitness:{gen_meta['low']:.2f}")
+    print(f"    average fitness:{gen_meta['avg']:.2f}")
+    print("-" * 10) 
+
+
+def check_convergence(generation_metadata, current_generation, convergence_analysis, threshold):
+    count = 0
+
+    if(convergence_analysis > current_generation):
+        return 0
+    
+    convergence_analysis_point = current_generation - convergence_analysis
+
+
+    for i in range(convergence_analysis_point, current_generation):
+        avg_fitness = generation_metadata[i]["avg"]
+        max_fitness = generation_metadata[i]["max"]
+        diff = max_fitness - avg_fitness
+
+        if(diff < threshold):
+            count += 1
+
+    if(count == convergence_analysis):
+        return 1 
+
+    return 0
+
+
