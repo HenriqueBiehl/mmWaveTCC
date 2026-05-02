@@ -312,7 +312,7 @@ def collect_generation_metadata(generation_metadata, population, population_size
         
     max_fit = 0.0
     avarege_fit = 0.0
-    lowest_fit = 10000000000000.0
+    lowest_fit = 1e10
     for j in range(population_size):
         f = fitness(population[j])
 

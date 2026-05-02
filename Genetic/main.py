@@ -61,7 +61,6 @@ population_copy = population.copy()
 # print("")
 
 print("Crossover using Torunament and Session Swap Mutation")
-print("\n")
 max_fit = 0.0
 avarege_fit = 0.0
 lowest_fit = None
@@ -75,10 +74,10 @@ for i in range(num_generations):
 
     gs.collect_generation_metadata(generations_metada, new_population, population_size)
 
-    if(gs.check_convergence(generations_metada, i, 5, 25.0)):
-            print(f"GEN {i}: Convergence detected")
-            gs.print_one_generation(generations_metada[i])
-            print("")
+    # if(gs.check_convergence(generations_metada, i, 5, 25.0)):
+    #         print(f"GEN {i}: Convergence detected")
+    #         gs.print_one_generation(generations_metada[i])
+    #         print("")
 
     population = new_population.copy()
 
@@ -93,8 +92,11 @@ for j in range(population_size):
         max_user = population[j]
 print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
 
-print("Collected Fitness From All Generations")
-gs.print_generation_metadata(generations_metada, num_generations)
+with open("metadata.txt", "w") as metadataFile:
+    for g in generations_metada:
+        metadataFile.write(f"{g['low']:.2f} - {g['avg']:.2f} - {g['max']:.2f}\n")
+print("Generations metadata file created!")
+
 # print("\t", end="")
 # for i in range(gene_size):
 #     print(f"{max_user[i][0][0]}", end="")
