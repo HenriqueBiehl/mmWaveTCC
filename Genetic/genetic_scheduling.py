@@ -339,8 +339,8 @@ def print_generation_metadata(generation_metadata, num_generations):
 
 def print_one_generation(gen_meta):
     print(f"    max     fitness:{gen_meta['max']:.2f}")
-    print(f"    lowest  fitness:{gen_meta['low']:.2f}")
     print(f"    average fitness:{gen_meta['avg']:.2f}")
+    print(f"    lowest  fitness:{gen_meta['low']:.2f}")
     print("-" * 10) 
 
 
@@ -366,4 +366,19 @@ def check_convergence(generation_metadata, current_generation, convergence_analy
 
     return 0
 
+def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
+    new_population = population.copy()
+    discarded_size = int(population_size / 2)
+    
+    fitness_values = []
+    for i in range(0, population_size):
+        fitness_values.append({"pos": i, "fitness": fitness(new_population[i])})
+    fitness_sorted = fitness_values.copy()
+    fitness_sorted.sort(key=itemgetter('fitness'))
+    
+    new_population = new_population[discarded_size:]
 
+    new_population = np.concatenate((new_population, initial_population_random(scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu)))
+
+    return np.array(new_population)
+    
