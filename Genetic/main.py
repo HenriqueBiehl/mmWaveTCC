@@ -1,6 +1,7 @@
 import numpy as np
-import sys
 import genetic_scheduling as gs
+import createPlot as cPlot
+import sys, argparse, time
 
 population_size = 700
 num_generations = 100
@@ -9,6 +10,12 @@ tournament_size = 3
 mutation_rate = 0.05
 
 generations_metada = []
+
+# Parseia entrada do programa
+parser = argparse.ArgumentParser(description="Algoritmo Genético de Escalonamento em Redes mmWave")
+parser.add_argument('-p', '--plot', action='store_true', help='Exibe o gráfico')
+parser.add_argument('-fi', '--finalind', action='store_true', help='Exibe o(s) indivíduo(s) de fitness máximo ao final')
+args = parser.parse_args()
 
 # Lê toda a entrada do arquivo ou stdin  
 dados = sys.stdin.read().split()
@@ -60,12 +67,13 @@ population_copy = population.copy()
 # gs.print_population(population, population_size, gene_size,  nts)
 # print("")
 
-print("Crossover using Torunament and Session Swap Mutation")
+print("Crossover using Tournament and Session Swap Mutation")
 max_fit = 0.0
 avarege_fit = 0.0
 lowest_fit = None
 max_user = []
-    
+start = time.time()
+
 gs.collect_generation_metadata(generations_metada, population, population_size)
 
 for i in range(num_generations):
@@ -81,23 +89,32 @@ for i in range(num_generations):
 
     population = new_population.copy()
 
-# print("Final Population:")
-# gs.print_population(new_population, population_size, gene_size,  nts)
-# print("")
-max_fit = 0.0
-for j in range(population_size):
-    f = gs.fitness(population[j])
-    if f > max_fit:
-        max_fit = f
-        max_user = population[j]
-print(f"Max fitness of generation {i+1} = {max_fit:.2f}")
+end = time.time() - start
+
+print(f"Max fitness of generation {i+1} = {generations_metada[i]["max"]:.2f} found in {end:.2f} secs")
 
 with open("metadata.txt", "w") as metadataFile:
     for g in generations_metada:
         metadataFile.write(f"{g['low']:.2f} - {g['avg']:.2f} - {g['max']:.2f}\n")
-print("Generations metadata file created!")
 
-# print("\t", end="")
-# for i in range(gene_size):
-#     print(f"{max_user[i][0][0]}", end="")
+# print("Final Population:")
+# gs.print_population(new_population, population_size, gene_size,  nts)
 # print("")
+
+if args.finalind:
+    maxIndvs = []
+
+    print("Maximal individuals: ")
+
+    for p in population:
+        nao_pertence = not any(np.array_equal(p, x) for x in maxIndvs)
+
+        if (gs.fitness(p) == generations_metada[i]["max"]) and nao_pertence:
+            maxIndvs.append(p)
+            print("\t", end="")
+            for j in range(gene_size):
+                print(f"{p[j][0][0]}", end="")
+            print("")
+
+if args.plot:
+    cPlot.plotFitness()

@@ -9,7 +9,7 @@ nu = 0
 numFiles = 0
 ratePerUser = []
 
-for root, dirs, files in os.walk(folderPath, topdown=True):
+for root, _, files in os.walk(folderPath, topdown=True):
     files.sort()
     for name in files:
         numFiles += 1
