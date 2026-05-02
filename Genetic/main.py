@@ -5,9 +5,9 @@ import sys, argparse, time
 
 population_size = 700
 num_generations = 100
-elitism_rate = 0.01
-tournament_size = 3
-mutation_rate = 0.05
+elitism_rate = 0.1
+tournament_size = 2
+mutation_rate = 0.15
 
 generations_metada = []
 
@@ -17,13 +17,14 @@ parser.add_argument('-p', '--plot', action='store_true', help='Exibe o gráfico'
 parser.add_argument('-fi', '--finalind', action='store_true', help='Exibe o(s) indivíduo(s) de fitness máximo ao final')
 parser.add_argument('-c', '--convergence', action='store_true', help='Para o programa ao detectar convergencia')
 parser.add_argument('-g', '--generations', type=int, help='Número de gerações para análise de convergência')
+parser.add_argument('-mc', '--max_conv', type=int, help='Número máximo de vezes que irá convergir antes de parar')
 parser.add_argument('-t', '--threshold', type=float, help='Threshold de convergência')
 args = parser.parse_args()
 
 # Checa se criterios de convergencia estão corretos
 if args.convergence:
-    if args.generations is None or args.threshold is None:
-        parser.error("Ao usar -c/--convergence, você deve informar -g e -t")
+    if args.generations is None or args.threshold is None or args.max_conv is None:
+        parser.error("Ao usar -c/--convergence, você deve informar -g, -t e -mc")
 
 # Lê toda a entrada do arquivo ou stdin  
 dados = sys.stdin.read().split()
@@ -81,24 +82,28 @@ avarege_fit = 0.0
 lowest_fit = None
 max_user = []
 hypermutation = False
+last_convergence = 0
+conv_count = 0
 start = time.time()
 
 gs.collect_generation_metadata(generations_metada, population, population_size)
 
 for i in range(num_generations):
-    new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "roulette", "one-point")
-    new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
+    new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "tournament", "uniform")
+    new_population = gs.session_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
     gs.collect_generation_metadata(generations_metada, new_population, population_size)
 
-    if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold)):
-            print(f"GEN {i}: Convergence detected")
-            gs.print_one_generation(generations_metada[i])
-            if not hypermutation:
-                new_population = gs.hypermutation(new_population, scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu)
-                hypermutation = True
-            else:
-                break
+    if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold, last_convergence)):
+        print(f"GEN {i}: Convergence detected")
+        gs.print_one_generation(generations_metada[i])
+        new_population = gs.hypermutation(new_population, scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu)
+        last_convergence = i
+        conv_count += 1
+
+    # Hipermutação no max max_conv vezes, depois para o algoritmo pela convergencia
+    if conv_count == args.max_conv:
+        break
 
     population = new_population.copy()
 

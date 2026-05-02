@@ -344,14 +344,13 @@ def print_one_generation(gen_meta):
     print("-" * 10) 
 
 
-def check_convergence(generation_metadata, current_generation, convergence_analysis, threshold):
+def check_convergence(generation_metadata, current_generation, convergence_analysis, threshold, last_convergence):
     count = 0
 
-    if(convergence_analysis > current_generation):
+    if(convergence_analysis > current_generation) or (current_generation < last_convergence+convergence_analysis):
         return 0
     
     convergence_analysis_point = current_generation - convergence_analysis
-
 
     for i in range(convergence_analysis_point, current_generation):
         avg_fitness = generation_metadata[i]["avg"]
@@ -367,18 +366,22 @@ def check_convergence(generation_metadata, current_generation, convergence_analy
     return 0
 
 def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
-    new_population = population.copy()
-    discarded_size = int(population_size / 2)
-    
-    fitness_values = []
-    for i in range(0, population_size):
-        fitness_values.append({"pos": i, "fitness": fitness(new_population[i])})
-    fitness_sorted = fitness_values.copy()
-    fitness_sorted.sort(key=itemgetter('fitness'))
-    
-    new_population = new_population[discarded_size:]
+    discarded_size = population_size // 2
 
-    new_population = np.concatenate((new_population, initial_population_random(scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu)))
+    # Calcula fitness direto em array numpy (sem dict)
+    fitness_values = np.array([fitness(ind) for ind in population])
 
-    return np.array(new_population)
+    # Pega índices ordenados (menor fitness primeiro)
+    sorted_idx = np.argsort(fitness_values)
+
+    # Mantém apenas os melhores (metade superior)
+    survivors = population[sorted_idx[discarded_size:]]
+
+    # Gera novos indivíduos (só o necessário!)
+    new_individuals = initial_population_random(scheduling_sessions, usage_constraint, gene_size, discarded_size, nts, nu)
+
+    # Junta tudo
+    new_population = np.vstack((survivors, new_individuals))
+
+    return new_population
     
