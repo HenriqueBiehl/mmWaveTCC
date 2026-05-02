@@ -59,13 +59,13 @@ def print_individual(individual, gene_size, dna):
 def roulette_selection(fitness_values, population_size):
     total_fitness = 0.0
     for f in fitness_values:
-        total_fitness += f['fitness']
+        total_fitness += f
     
     spin = rand.uniform(0, total_fitness)
     cumulative = 0.0
 
     for i in range(population_size):
-        cumulative += fitness_values[i]['fitness']
+        cumulative += fitness_values[i]
         if spin < cumulative:
             return i
 
@@ -89,9 +89,9 @@ def crossover(population, elitism_rate, tournament_size, gene_size, population_s
     import heapq
 
     new_population = []
+    fitness_values = [fitness(ind) for ind in population]
 
     elite_size = int(elitism_rate * population_size)
-
     elite = heapq.nlargest(elite_size, range(population_size), key=lambda i: fitness(population[i]))
 
     for i in elite:
