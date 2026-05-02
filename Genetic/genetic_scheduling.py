@@ -86,21 +86,16 @@ def tournament_selection(population, population_size, gene_size, dna, tournament
 
 
 def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type, crossover_type):
- 
+    import heapq
+
     new_population = []
 
-    # Elitismo seleciona elitism_rate% da população para continuar igual na proxima geracao
     elite_size = int(elitism_rate * population_size)
-    fitness_values = []
-    for i in range(0, population_size):
-        fitness_values.append({"pos": i, "fitness": fitness(population[i])})
-    fitness_sorted = fitness_values.copy()
-    fitness_sorted.sort(key=itemgetter('fitness'))
-    fitness_sorted.reverse()
-    elite = fitness_sorted[:elite_size]
 
-    for e in elite:
-        new_population.append(population[e["pos"]])
+    elite = heapq.nlargest(elite_size, range(population_size), key=lambda i: fitness(population[i]))
+
+    for i in elite:
+        new_population.append(population[i])
 
     # Gera novos individuos mantendo o tamanho da população inicial
     for _ in range(0, population_size-elite_size):
