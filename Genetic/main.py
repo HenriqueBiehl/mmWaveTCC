@@ -5,7 +5,7 @@ import sys, argparse, time
 
 population_size = 700
 num_generations = 100
-elitism_rate = 0.1
+elitism_rate = 0.01
 tournament_size = 3
 mutation_rate = 0.05
 

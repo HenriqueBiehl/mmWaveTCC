@@ -23,7 +23,7 @@ def plotFitness():
     plt.plot(x, medios, label='Fitness Médio')
     plt.plot(x, maximos, label='Fitness Máximo')
 
-    plt.xlabel('Iteração')
+    plt.xlabel('Geração')
     plt.ylabel('Fitness')
     plt.title('Evolução do Fitness ao longo do tempo')
     plt.legend()

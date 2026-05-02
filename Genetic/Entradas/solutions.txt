@@ -1,0 +1,5 @@
+Soluções ótimas das entradas criadas (Resolvido pelo BILP)
+
+ent1 = 11.40
+ent2 = 36455.22
+ent3 = 24976.33
