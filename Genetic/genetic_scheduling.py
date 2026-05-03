@@ -277,29 +277,29 @@ def timeslot_mutation(population, scheduling_sessions, mutation_rate, gene_size,
 
 def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
 
-    mutated_gene = rand.randint(0, gene_size - 1)
+    for i in range(0, gene_size):
 
-    timeslot_a = rand.randint(0, dna - 1)
-    timeslot_b = rand.randint(0, dna - 1)
-    while(timeslot_a == timeslot_b ):
+        timeslot_a = rand.randint(0, dna - 1)
         timeslot_b = rand.randint(0, dna - 1)
+        while(timeslot_a == timeslot_b ):
+            timeslot_b = rand.randint(0, dna - 1)
 
-    user_a = int(individual[mutated_gene][0][0][timeslot_a])
-    user_b = int(individual[mutated_gene][0][0][timeslot_b])
+        user_a = int(individual[i][0][0][timeslot_a])
+        user_b = int(individual[i][0][0][timeslot_b])
 
 
-    new_rate_a = predicted_rates[mutated_gene][user_a][timeslot_b]
-    new_rate_b = predicted_rates[mutated_gene][user_b][timeslot_a]
-    #print( individual[mutated_gene][0])
-    #print(f'    gene: {mutated_gene} | ta: {timeslot_a} | tb: {timeslot_b}')
-    #print(f'    {user_a} and {user_b}')
-    #print(f'    a: {predicted_rates[mutated_gene][user_a][timeslot_a]} b:{predicted_rates[mutated_gene][user_b][timeslot_b]}')
+        new_rate_a = predicted_rates[i][user_a][timeslot_b]
+        new_rate_b = predicted_rates[i][user_b][timeslot_a]
+        #print( individual[i][0])
+        #print(f'    gene: {i} | ta: {timeslot_a} | tb: {timeslot_b}')
+        #print(f'    {user_a} and {user_b}')
+        #print(f'    a: {predicted_rates[i][user_a][timeslot_a]} b:{predicted_rates[i][user_b][timeslot_b]}')
 
-    individual[mutated_gene][0][0][timeslot_a] = user_b
-    individual[mutated_gene][0][1][timeslot_a] = new_rate_b
+        individual[i][0][0][timeslot_a] = user_b
+        individual[i][0][1][timeslot_a] = new_rate_b
 
-    individual[mutated_gene][0][0][timeslot_b] = user_a
-    individual[mutated_gene][0][1][timeslot_b] = new_rate_a
+        individual[i][0][0][timeslot_b] = user_a
+        individual[i][0][1][timeslot_b] = new_rate_a
 
     return 
 
@@ -359,6 +359,7 @@ def check_convergence(generation_metadata, current_generation, convergence_analy
         return 1 
 
     return 0
+
 
 def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
     discarded_size = population_size // 2

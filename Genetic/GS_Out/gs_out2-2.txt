@@ -1,0 +1,551 @@
+Total timeslots:1000
+Total Users:10
+User Timeslot usage:
+[107. 103.  92. 130.  92.  93.  97. 105.  93.  88.]
+
+Scheduling session aggregation:
+[[[1.83 1.97 0.91 ... 1.5  0.12 0.43]
+  [0.95 0.47 0.72 ... 1.63 0.52 0.16]
+  [1.47 1.52 0.33 ... 0.27 0.96 0.23]
+  ...
+  [1.91 0.42 1.41 ... 0.66 0.11 1.17]
+  [1.11 0.28 1.3  ... 1.98 1.19 1.11]
+  [1.01 1.01 0.46 ... 1.56 1.61 1.24]]
+
+ [[0.87 0.47 1.51 ... 1.54 1.77 1.93]
+  [0.94 0.43 0.55 ... 0.34 0.4  0.81]
+  [0.51 0.92 1.27 ... 0.26 1.77 1.68]
+  ...
+  [1.91 1.54 0.32 ... 0.32 0.36 1.23]
+  [1.01 0.43 0.69 ... 1.44 0.26 0.63]
+  [0.67 1.27 0.72 ... 1.08 0.69 1.33]]
+
+ [[1.49 0.76 0.54 ... 0.15 1.12 1.62]
+  [0.88 0.62 0.32 ... 1.81 1.5  1.29]
+  [1.38 0.44 0.11 ... 0.53 0.18 0.6 ]
+  ...
+  [1.28 0.85 1.92 ... 1.83 0.55 0.53]
+  [0.55 1.31 1.99 ... 1.93 1.02 1.3 ]
+  [0.1  1.61 1.92 ... 0.69 0.8  0.14]]
+
+ [[0.17 1.7  0.43 ... 0.73 1.58 1.46]
+  [0.14 0.34 0.68 ... 1.22 1.74 1.43]
+  [1.11 0.96 1.75 ... 1.94 1.77 0.3 ]
+  ...
+  [1.54 0.53 0.53 ... 1.16 0.14 1.72]
+  [1.06 1.57 0.42 ... 1.21 1.32 0.32]
+  [0.13 0.55 0.8  ... 0.71 0.54 0.46]]
+
+ [[0.9  1.05 1.95 ... 0.37 1.89 0.47]
+  [1.79 1.01 0.58 ... 1.92 0.91 1.37]
+  [0.62 0.69 0.46 ... 1.22 1.75 1.82]
+  ...
+  [0.69 1.91 1.65 ... 0.57 0.7  0.29]
+  [1.64 1.07 1.96 ... 1.31 1.04 1.38]
+  [1.15 2.   1.97 ... 0.46 1.46 1.28]]]
+
+Crossover using Torunament and Session Swap Mutation
+
+
+Max fitness of generation 100 = 5501.80
+Collected Fitness From All Generations
+gen-0:
+    max     fitness:5337.55
+    lowest  fitness:5140.69
+    average fitness:5246.58
+----------
+gen-1:
+    max     fitness:5355.67
+    lowest  fitness:5194.12
+    average fitness:5288.44
+----------
+gen-2:
+    max     fitness:5405.98
+    lowest  fitness:5156.35
+    average fitness:5316.33
+----------
+gen-3:
+    max     fitness:5432.47
+    lowest  fitness:5214.43
+    average fitness:5341.93
+----------
+gen-4:
+    max     fitness:5459.96
+    lowest  fitness:5253.54
+    average fitness:5363.20
+----------
+gen-5:
+    max     fitness:5459.98
+    lowest  fitness:5271.63
+    average fitness:5389.17
+----------
+gen-6:
+    max     fitness:5480.74
+    lowest  fitness:5289.71
+    average fitness:5411.76
+----------
+gen-7:
+    max     fitness:5494.14
+    lowest  fitness:5307.05
+    average fitness:5432.91
+----------
+gen-8:
+    max     fitness:5501.80
+    lowest  fitness:5317.37
+    average fitness:5448.14
+----------
+gen-9:
+    max     fitness:5501.80
+    lowest  fitness:5327.81
+    average fitness:5461.87
+----------
+gen-10:
+    max     fitness:5501.80
+    lowest  fitness:5357.45
+    average fitness:5474.42
+----------
+gen-11:
+    max     fitness:5501.80
+    lowest  fitness:5357.61
+    average fitness:5478.52
+----------
+gen-12:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.34
+----------
+gen-13:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.71
+----------
+gen-14:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.71
+----------
+gen-15:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5477.80
+----------
+gen-16:
+    max     fitness:5501.80
+    lowest  fitness:5369.25
+    average fitness:5481.07
+----------
+gen-17:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.22
+----------
+gen-18:
+    max     fitness:5501.80
+    lowest  fitness:5369.25
+    average fitness:5481.45
+----------
+gen-19:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.18
+----------
+gen-20:
+    max     fitness:5501.80
+    lowest  fitness:5348.01
+    average fitness:5483.31
+----------
+gen-21:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.54
+----------
+gen-22:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.19
+----------
+gen-23:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.03
+----------
+gen-24:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.55
+----------
+gen-25:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5478.77
+----------
+gen-26:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.51
+----------
+gen-27:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.85
+----------
+gen-28:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.58
+----------
+gen-29:
+    max     fitness:5501.80
+    lowest  fitness:5362.85
+    average fitness:5480.04
+----------
+gen-30:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.04
+----------
+gen-31:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.13
+----------
+gen-32:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.32
+----------
+gen-33:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5478.67
+----------
+gen-34:
+    max     fitness:5501.80
+    lowest  fitness:5365.48
+    average fitness:5482.53
+----------
+gen-35:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.79
+----------
+gen-36:
+    max     fitness:5501.80
+    lowest  fitness:5380.54
+    average fitness:5480.78
+----------
+gen-37:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.00
+----------
+gen-38:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5483.57
+----------
+gen-39:
+    max     fitness:5501.80
+    lowest  fitness:5356.19
+    average fitness:5479.49
+----------
+gen-40:
+    max     fitness:5501.80
+    lowest  fitness:5358.23
+    average fitness:5479.68
+----------
+gen-41:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.19
+----------
+gen-42:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.57
+----------
+gen-43:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.29
+----------
+gen-44:
+    max     fitness:5501.80
+    lowest  fitness:5341.21
+    average fitness:5479.84
+----------
+gen-45:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.41
+----------
+gen-46:
+    max     fitness:5501.80
+    lowest  fitness:5369.25
+    average fitness:5481.69
+----------
+gen-47:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.75
+----------
+gen-48:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5485.59
+----------
+gen-49:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.17
+----------
+gen-50:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.60
+----------
+gen-51:
+    max     fitness:5501.80
+    lowest  fitness:5332.35
+    average fitness:5479.63
+----------
+gen-52:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.12
+----------
+gen-53:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.16
+----------
+gen-54:
+    max     fitness:5501.80
+    lowest  fitness:5365.48
+    average fitness:5479.77
+----------
+gen-55:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.45
+----------
+gen-56:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.92
+----------
+gen-57:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.77
+----------
+gen-58:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5483.15
+----------
+gen-59:
+    max     fitness:5501.80
+    lowest  fitness:5374.30
+    average fitness:5480.15
+----------
+gen-60:
+    max     fitness:5501.80
+    lowest  fitness:5362.85
+    average fitness:5477.71
+----------
+gen-61:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.12
+----------
+gen-62:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5478.79
+----------
+gen-63:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5483.49
+----------
+gen-64:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5477.98
+----------
+gen-65:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.34
+----------
+gen-66:
+    max     fitness:5501.80
+    lowest  fitness:5356.19
+    average fitness:5480.58
+----------
+gen-67:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.79
+----------
+gen-68:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.10
+----------
+gen-69:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.51
+----------
+gen-70:
+    max     fitness:5501.80
+    lowest  fitness:5356.19
+    average fitness:5482.47
+----------
+gen-71:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.77
+----------
+gen-72:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.55
+----------
+gen-73:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.54
+----------
+gen-74:
+    max     fitness:5501.80
+    lowest  fitness:5367.72
+    average fitness:5479.67
+----------
+gen-75:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.53
+----------
+gen-76:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5483.32
+----------
+gen-77:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.37
+----------
+gen-78:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.45
+----------
+gen-79:
+    max     fitness:5501.80
+    lowest  fitness:5374.30
+    average fitness:5479.32
+----------
+gen-80:
+    max     fitness:5501.80
+    lowest  fitness:5343.88
+    average fitness:5479.98
+----------
+gen-81:
+    max     fitness:5501.80
+    lowest  fitness:5339.04
+    average fitness:5478.74
+----------
+gen-82:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.31
+----------
+gen-83:
+    max     fitness:5501.80
+    lowest  fitness:5367.76
+    average fitness:5481.44
+----------
+gen-84:
+    max     fitness:5501.80
+    lowest  fitness:5336.12
+    average fitness:5480.92
+----------
+gen-85:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.50
+----------
+gen-86:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.41
+----------
+gen-87:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5483.34
+----------
+gen-88:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.30
+----------
+gen-89:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.30
+----------
+gen-90:
+    max     fitness:5501.80
+    lowest  fitness:5367.76
+    average fitness:5481.92
+----------
+gen-91:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.69
+----------
+gen-92:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.66
+----------
+gen-93:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.81
+----------
+gen-94:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.98
+----------
+gen-95:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5485.05
+----------
+gen-96:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5482.41
+----------
+gen-97:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5479.02
+----------
+gen-98:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5480.99
+----------
+gen-99:
+    max     fitness:5501.80
+    lowest  fitness:5381.11
+    average fitness:5481.64
+----------

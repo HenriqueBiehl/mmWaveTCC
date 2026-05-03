@@ -2,12 +2,14 @@ import numpy as np
 import genetic_scheduling as gs
 import createPlot as cPlot
 import sys, argparse, time
+import random  
 
-population_size = 700
-num_generations = 100
-elitism_rate = 0.1
+
+population_size = 300
+num_generations = 500
+elitism_rate = 0.02
 tournament_size = 2
-mutation_rate = 0.15
+mutation_rate = 0.2
 
 generations_metada = []
 
@@ -19,12 +21,30 @@ parser.add_argument('-c', '--convergence', action='store_true', help='Para o pro
 parser.add_argument('-g', '--generations', type=int, help='Número de gerações para análise de convergência')
 parser.add_argument('-mc', '--max_conv', type=int, help='Número máximo de vezes que irá convergir antes de parar')
 parser.add_argument('-t', '--threshold', type=float, help='Threshold de convergência')
+parser.add_argument('-meta ', '--metadata', action='store_true', help='Retorna, ao fim da execuçaõ, os metadados e parametors utilizados')
+parser.add_argument('-s', '--seed', action='store_true', help='Adicionar seed manualmente')
+parser.add_argument('-sv', '--seed_value', type=int, help='Valor da seed')
+
+#Adicionar opcao -m que printa os metadados utilizados (tamanho populacao, geracoes, eltitimos, seed utilizada no programa, etc)
+#adiciona opcao -s que utiliza uma seed passada por argumento 
 args = parser.parse_args()
 
 # Checa se criterios de convergencia estão corretos
 if args.convergence:
     if args.generations is None or args.threshold is None or args.max_conv is None:
         parser.error("Ao usar -c/--convergence, você deve informar -g, -t e -mc")
+
+if args.seed:
+    if args.seed is None:
+            parser.error("Ao usar -s/--seed, você deve informar -sv e indicar o valor da seed")
+    else:
+        print(f'Used seed: {args.seed_value}')
+        exec_seed = args.seed_value
+else:
+    exec_seed = random.randrange(sys.maxsize)
+
+random.seed(exec_seed)
+
 
 # Lê toda a entrada do arquivo ou stdin  
 dados = sys.stdin.read().split()
@@ -90,7 +110,7 @@ gs.collect_generation_metadata(generations_metada, population, population_size)
 
 for i in range(num_generations):
     new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "tournament", "uniform")
-    new_population = gs.session_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
+    new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
     gs.collect_generation_metadata(generations_metada, new_population, population_size)
 
@@ -109,7 +129,7 @@ for i in range(num_generations):
 
 end = time.time() - start
 
-print(f"Max fitness of generation {i+1} = {generations_metada[i]["max"]:.2f} found in {end:.2f} secs")
+print(f"Max fitness of generation {i+1} = {generations_metada[i]['max']:.2f} found in {end:.2f} secs")
 
 with open("metadata.txt", "w") as metadataFile:
     for g in generations_metada:
@@ -136,3 +156,19 @@ if args.finalind:
 
 if args.plot:
     cPlot.plotFitness()
+
+if args.metadata:
+    print("\n")
+    print("---- Metadata and Parameters -----")
+    print(f"    Seed: {exec_seed}")
+    print(f"    Population size: {population_size}")
+    print(f"    Generation Number: {num_generations}")
+    print(f"    Elitism Rate: {elitism_rate:.2f}")
+    print(f"    Mutation Rate: {mutation_rate:.2f}")
+    print(f"    Tournament Size: {tournament_size}")
+
+    if(args.convergence):
+        print(f"    Converge Maximum Count: {args.max_conv}")
+        print(f"    Convergence Generation Threshold: {args.generations}")
+        print(f"    Convergence Threshold: {args.threshold:.2f}")
+ 
