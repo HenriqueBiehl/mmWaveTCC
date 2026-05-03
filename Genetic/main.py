@@ -110,7 +110,7 @@ gs.collect_generation_metadata(generations_metada, population, population_size)
 
 for i in range(num_generations):
     new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "tournament", "uniform")
-    new_population = gs.session_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
+    new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
     gs.collect_generation_metadata(generations_metada, new_population, population_size)
     
