@@ -1,7 +1,5 @@
 import numpy as np 
 import random as rand
-from operator import itemgetter
-
 
 def initial_population_random(scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
     
@@ -56,46 +54,22 @@ def print_individual(individual, gene_size, dna):
         print("")
 
 
-def roulette_selection(fitness_values, population_size):
-    total_fitness = 0.0
-    for f in fitness_values:
-        total_fitness += f
-    
-    spin = rand.uniform(0, total_fitness)
-    cumulative = 0.0
-
-    for i in range(population_size):
-        cumulative += fitness_values[i]
-        if spin < cumulative:
-            return i
+def roulette_selection(fitness_values):
+    return rand.choices(range(len(fitness_values)), weights=fitness_values, k=1)[0]
 
 
-def tournament_selection(population, population_size, gene_size, dna, tournament_size):
-
-    population_sample_index = rand.sample(range(0, population_size), tournament_size)
-    population_sample = [population[i] for i in population_sample_index]
-
-
-    fitness_values = []
-    for i in range(0, len(population_sample_index)):
-        fitness_values.append({"pos": population_sample_index[i], "fitness": fitness(population_sample[i])})
-    fitness_values.sort(key=itemgetter('fitness'))
-    fitness_values.reverse()
-
-    return fitness_values[0]["pos"]
+def tournament_selection(population, fitness_values, tournament_size):
+    indices = rand.sample(range(len(population)), tournament_size)
+    return max(indices, key=lambda i: fitness_values[i])
 
 
 def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type, crossover_type):
-    import heapq
-
-    new_population = []
     fitness_values = [fitness(ind) for ind in population]
 
     elite_size = int(elitism_rate * population_size)
-    elite = heapq.nlargest(elite_size, range(population_size), key=lambda i: fitness(population[i]))
+    elite = sorted(zip(population, fitness_values), key=lambda x: x[1], reverse=True)[:elite_size]
 
-    for i in elite:
-        new_population.append(population[i])
+    new_population = [ind for ind, _ in elite]
 
     # Gera novos individuos mantendo o tamanho da população inicial
     for _ in range(0, population_size-elite_size):
@@ -103,23 +77,13 @@ def crossover(population, elitism_rate, tournament_size, gene_size, population_s
             a = rand.randint(0, population_size-1)
             b = rand.randint(0, population_size-1)
 
-            while a == b:
-                b = rand.randint(0, population_size-1)
-
         elif selection_type == "roulette":
-            a = roulette_selection(fitness_values, population_size)
-            b = roulette_selection(fitness_values, population_size)
-
-            while a == b:
-                b = roulette_selection(fitness_values, population_size)
+            a = roulette_selection(fitness_values)
+            b = roulette_selection(fitness_values)
 
         elif selection_type == "tournament":
-            a = tournament_selection(population, population_size, gene_size, dna, tournament_size)
-            b = tournament_selection(population, population_size, gene_size, dna, tournament_size)
-
-            while a == b:
-                b = tournament_selection(population, population_size, gene_size, dna, tournament_size)
-
+            a = tournament_selection(population, fitness_values, tournament_size)
+            b = tournament_selection(population, fitness_values, tournament_size)
 
         if(crossover_type == "uniform"):
             child = uniform_crossover(a, b, population, gene_size)
@@ -214,7 +178,6 @@ def two_point_crossover(a, b, population, gene_size):
         return child1
     
     return child2
-
 
 # Calcula fitness somando os User Rates a cada timeslot
 def fitness(individual):
@@ -360,9 +323,8 @@ def check_convergence(generation_metadata, current_generation, convergence_analy
 
     return 0
 
-
-def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
-    discarded_size = population_size // 2
+def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu, discarded_percent):
+    discarded_size = int(population_size * discarded_percent)
 
     # Calcula fitness direto em array numpy (sem dict)
     fitness_values = np.array([fitness(ind) for ind in population])
@@ -380,4 +342,3 @@ def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, 
     new_population = np.vstack((survivors, new_individuals))
 
     return new_population
-    
