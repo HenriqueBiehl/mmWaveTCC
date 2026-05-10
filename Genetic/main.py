@@ -5,8 +5,8 @@ import sys, argparse, time
 import random  
 
 
-population_size = 100
-num_generations = 7500
+population_size = 30
+num_generations = 30000
 elitism_rate = 0.3
 tournament_size = 2
 crossover_rate = 1.0

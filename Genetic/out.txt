@@ -341,3 +341,39 @@ Run 30 -> fitness=35191.27 | time=38.07
 ----------------------
 Média do tempo: 38.3673 secs
 Média do fitness: 35208.9320 Gbps
+
+11th run - 30000 Gen - 30 population - 0.15 mutation - Roulette, one point, renewall and initial_population_replicated_gene
+Run 1 -> fitness=35826.62 | time=34.85
+Run 2 -> fitness=35800.22 | time=35.04
+Run 3 -> fitness=35808.31 | time=34.61
+Run 4 -> fitness=35830.33 | time=34.85
+Run 5 -> fitness=35861.87 | time=34.92
+Run 6 -> fitness=35883.52 | time=34.58
+Run 7 -> fitness=35821.94 | time=34.50
+Run 8 -> fitness=35799.48 | time=34.98
+Run 9 -> fitness=35865.49 | time=34.93
+Run 10 -> fitness=35835.76 | time=34.89
+Run 11 -> fitness=35823.40 | time=34.58
+Run 12 -> fitness=35849.29 | time=34.91
+Run 13 -> fitness=35790.10 | time=34.81
+Run 14 -> fitness=35817.88 | time=34.54
+Run 15 -> fitness=35879.91 | time=34.94
+Run 16 -> fitness=35828.58 | time=35.93
+Run 17 -> fitness=35832.92 | time=34.77
+Run 18 -> fitness=35821.58 | time=34.66
+Run 19 -> fitness=35803.66 | time=35.48
+Run 20 -> fitness=35840.71 | time=35.75
+Run 21 -> fitness=35857.86 | time=34.80
+Run 22 -> fitness=35839.53 | time=34.73
+Run 23 -> fitness=35811.42 | time=34.68
+Run 24 -> fitness=35843.43 | time=35.71
+Run 25 -> fitness=35801.36 | time=35.02
+Run 26 -> fitness=35810.32 | time=35.61
+Run 27 -> fitness=35865.08 | time=34.82
+Run 28 -> fitness=35827.45 | time=35.04
+Run 29 -> fitness=35833.35 | time=34.89
+Run 30 -> fitness=35780.46 | time=34.76
+----------------------
+Média do tempo: 34.9526 secs
+Média do fitness: 35829.7276 Gbps
+
