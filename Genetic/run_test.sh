@@ -12,7 +12,8 @@ fi
 input_file=$1
 
 for i in $(seq 1 $runs); do
-    output=$(python3 main.py -c -g 20 -t 50 -mc 5 < "$input_file")
+    #output=$(python3 main.py -c -g 4500 -t 5 -mc 2 < "$input_file")
+    output=$(python3 main.py < "$input_file")
 
     # Pega só a última linha relevante
     line=$(echo "$output" | grep "Max fitness")

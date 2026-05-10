@@ -1,6 +1,45 @@
 import numpy as np 
 import random as rand
 
+
+def create_scheduling_mask(scheduling_sessions, usage_constraint, gene_size, nts, nu):
+    scheduling_mask = []
+    for j in range (0, gene_size): 
+        usage_constraint_counter = usage_constraint.copy()
+        for k in range(0, nts):
+            user = rand.randint(0, nu - 1)
+            while (usage_constraint_counter[user] == 0):
+                user = rand.randint(0, nu - 1)
+            scheduling_mask.append(user)
+    
+    return scheduling_mask
+
+
+def initial_population_replicated_gene(scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
+
+    population = []
+    for _ in range(0, population_size):
+        individual = []
+
+        scheduling_mask = create_scheduling_mask(scheduling_sessions, usage_constraint, gene_size, nts, nu)
+        for j in range (0, gene_size): 
+            gene = []
+            schedule = np.empty((2, nts))
+            for k in range(0, nts):
+                #print(f'{j} , {k}, {user}')
+                user = scheduling_mask[k]
+                schedule[0][k] = user
+                schedule[1][k] = scheduling_sessions[j][user][k] 
+            
+            gene.append(schedule)
+
+            individual.append(gene)
+
+        population.append(individual)        
+
+    return np.array(population)
+
+
 def initial_population_random(scheduling_sessions, usage_constraint, gene_size, population_size, nts, nu):
     
     population = []
@@ -63,13 +102,18 @@ def tournament_selection(population, fitness_values, tournament_size):
     return max(indices, key=lambda i: fitness_values[i])
 
 
-def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type, crossover_type):
+def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type, crossover_type, child_selection):
     fitness_values = [fitness(ind) for ind in population]
 
     elite_size = int(elitism_rate * population_size)
-    elite = sorted(zip(population, fitness_values), key=lambda x: x[1], reverse=True)[:elite_size]
+    elite = sorted(zip(population, fitness_values), key=lambda x: x[1], reverse=True)
 
-    new_population = [ind for ind, _ in elite]
+    new_population = [ind for ind, _ in elite][:elite_size]
+    
+    del elite[:elite_size]
+
+    if(child_selection == "weak_substitution"):
+        sorted_population = sorted(elite, key=lambda x: x[1], reverse=False)
 
     # Gera novos individuos mantendo o tamanho da população inicial
     for _ in range(0, population_size-elite_size):
@@ -91,11 +135,63 @@ def crossover(population, elitism_rate, tournament_size, gene_size, population_s
             child = one_point_crossover(a, b, population, gene_size)
         elif(crossover_type == "two-point"):
             child = two_point_crossover(a, b, population, gene_size)
+        elif(crossover_type == "dominant"):
+            child = dominant_crossover(a, b, population, gene_size)
 
-        new_population.append(child)
+
+        if(child_selection == "renewall"):
+            new_population.append(child)
+
+        elif(child_selection == "parent_substitution"):
+
+            fit_a = fitness_values[a]
+            fit_b = fitness_values[b]
+            fit_child = fitness(child)
+
+            if(fit_child >= fit_a and fit_child >= fit_b):
+                new_population.append(child)
+            elif(fit_a >= fit_b):
+                new_population.append(population[a])
+            else:
+                new_population.append(population[b])
+
+        elif(child_selection == "weak_substitution"): 
+
+            if(len(sorted_population) == 0):
+                new_population.append(child)
+            else: 
+                fit_child = fitness(child)
+
+                if(fit_child >= sorted_population[0][1]):
+                    new_population.append(child)
+                    sorted_population.pop(0)
+                else:
+                    new_population.append(sorted_population[0][0])
 
     return np.array(new_population)
 
+
+def gene_fitness(gene):
+    return np.sum([dna[0][1] for dna in gene])
+
+
+def dominant_crossover(a, b, population, gene_size):
+    
+    child = []
+
+    for i in range(0, gene_size):
+        gene_a = population[a][i]
+        gene_b = population[b][i]
+
+        gene_fitness_a = gene_fitness(gene_a)
+        gene_fitness_b = gene_fitness(gene_b)
+
+        if(gene_fitness_a > gene_fitness_b):
+            child.append(gene_a)
+        else: 
+            child.append(gene_b)
+    
+    return child
 
 def uniform_crossover(a, b, population, gene_size):
     a_gene_heritage = gene_size - 1
@@ -242,6 +338,7 @@ def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
 
     for i in range(0, gene_size):
 
+        
         timeslot_a = rand.randint(0, dna - 1)
         timeslot_b = rand.randint(0, dna - 1)
         while(timeslot_a == timeslot_b ):
@@ -336,7 +433,8 @@ def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, 
     survivors = population[sorted_idx[discarded_size:]]
 
     # Gera novos indivíduos (só o necessário!)
-    new_individuals = initial_population_random(scheduling_sessions, usage_constraint, gene_size, discarded_size, nts, nu)
+    #new_individuals = initial_population_random(scheduling_sessions, usage_constraint, gene_size, discarded_size, nts, nu)
+    new_individuals = initial_population_replicated_gene(scheduling_sessions, usage_constraint, gene_size, discarded_size, nts, nu)
 
     # Junta tudo
     new_population = np.vstack((survivors, new_individuals))

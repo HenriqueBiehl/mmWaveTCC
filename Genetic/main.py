@@ -5,11 +5,12 @@ import sys, argparse, time
 import random  
 
 
-population_size = 300
-num_generations = 500
-elitism_rate = 0.02
+population_size = 100
+num_generations = 7500
+elitism_rate = 0.3
 tournament_size = 2
-mutation_rate = 0.2
+crossover_rate = 1.0
+mutation_rate =  0.15
 
 generations_metada = []
 
@@ -89,7 +90,8 @@ print(scheduling_sesssions)
 print("")
 
 
-population = gs.initial_population_random(scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu)
+#population = gs.initial_population_random(scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu)
+population = gs.initial_population_replicated_gene(scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu)
 population_copy = population.copy()
 
 # print("Initial Population:")
@@ -108,8 +110,13 @@ start = time.time()
 
 gs.collect_generation_metadata(generations_metada, population, population_size)
 
+new_population = population_copy
 for i in range(num_generations):
-    new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "tournament", "uniform")
+    
+    r = random.uniform(0, 1)
+    if( r < crossover_rate):
+        new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "roulette", "one-point", "renewall")
+    
     new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
     gs.collect_generation_metadata(generations_metada, new_population, population_size)

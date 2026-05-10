@@ -251,6 +251,10 @@ Run 7 -> fitness=28521.99 | time=26.78
 Run 8 -> fitness=28815.07 | time=26.99
 Run 9 -> fitness=28387.38 | time=25.50
 Run 10 -> fitness=28360.01 | time=25.38
+----------------------
+Média do tempo: 28.58 secs
+Média do fitness: 28488.90 Gbps
+
 
 8th Run - 1000 gen - 10 convergence - max convergence 5 - threshold 50
 un 1 -> fitness=25827.82 | time=9.74
@@ -286,3 +290,54 @@ Run 30 -> fitness=25986.69 | time=11.41
 ----------------------
 Média do tempo: 10.9100 secs
 Média do fitness: 26066.0083 Gbps
+
+
+9th Run - 100 000 Gen - No convergence
+Run 1 -> fitness=35952.19 | time=26.26
+Run 2 -> fitness=35929.74 | time=27.77
+Run 3 -> fitness=35971.05 | time=26.62
+Run 4 -> fitness=35949.82 | time=27.13
+Run 5 -> fitness=35966.88 | time=26.71
+Run 6 -> fitness=35945.36 | time=28.21
+Run 7 -> fitness=35989.60 | time=28.07
+Run 8 -> fitness=35953.72 | time=28.33
+Run 9 -> fitness=36345.56 | time=138.94
+Run 10 -> fitness=36361.55 | time=134.40
+----------------------
+Média do tempo: 10.9100 secs
+Média do fitness: 26066.0083 Gbps
+
+10th run  - 7500 Gen - 100 population - 0.15 mutation - Roulette, one point, renewall and initial_population_replicated_gene
+Run 1 -> fitness=35321.81 | time=37.04
+Run 2 -> fitness=35201.71 | time=38.17
+Run 3 -> fitness=35120.65 | time=37.83
+Run 4 -> fitness=35196.70 | time=38.19
+Run 5 -> fitness=35163.15 | time=38.61
+Run 6 -> fitness=35257.45 | time=38.81
+Run 7 -> fitness=35231.05 | time=38.70
+Run 8 -> fitness=35167.14 | time=37.71
+Run 9 -> fitness=35147.83 | time=38.68
+Run 10 -> fitness=35189.59 | time=38.59
+Run 11 -> fitness=35241.66 | time=38.57
+Run 12 -> fitness=35196.72 | time=37.94
+Run 13 -> fitness=35191.09 | time=38.20
+Run 14 -> fitness=35243.94 | time=37.79
+Run 15 -> fitness=35237.11 | time=38.06
+Run 16 -> fitness=35230.70 | time=38.29
+Run 17 -> fitness=35217.45 | time=37.99
+Run 18 -> fitness=35167.74 | time=40.24
+Run 19 -> fitness=35249.04 | time=38.81
+Run 20 -> fitness=35194.18 | time=38.56
+Run 21 -> fitness=35199.90 | time=38.60
+Run 22 -> fitness=35294.91 | time=38.09
+Run 23 -> fitness=35260.77 | time=39.29
+Run 24 -> fitness=35179.17 | time=38.52
+Run 25 -> fitness=35193.37 | time=37.82
+Run 26 -> fitness=35224.35 | time=38.73
+Run 27 -> fitness=35172.93 | time=38.32
+Run 28 -> fitness=35212.19 | time=38.57
+Run 29 -> fitness=35172.39 | time=38.23
+Run 30 -> fitness=35191.27 | time=38.07
+----------------------
+Média do tempo: 38.3673 secs
+Média do fitness: 35208.9320 Gbps
