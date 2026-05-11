@@ -10,7 +10,7 @@ num_generations = 30000
 elitism_rate = 0.3
 tournament_size = 2
 crossover_rate = 1.0
-mutation_rate =  0.15
+mutation_rate = 0.15
 
 generations_metada = []
 
@@ -98,23 +98,17 @@ population_copy = population.copy()
 # gs.print_population(population, population_size, gene_size,  nts)
 # print("")
 
-print("Crossover using Tournament and Session Swap Mutation")
-max_fit = 0.0
-avarege_fit = 0.0
-lowest_fit = None
-max_user = []
-hypermutation = False
+print("Crossover using Roulette, Session Swap Mutation and One-Point Crossover")
 last_convergence = 0
 conv_count = 0
-start = time.time()
+start = time.perf_counter()
 
 gs.collect_generation_metadata(generations_metada, population, population_size)
 
 new_population = population_copy
 for i in range(num_generations):
-    
     r = random.uniform(0, 1)
-    if( r < crossover_rate):
+    if(r < crossover_rate):
         new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "roulette", "one-point", "renewall")
     
     new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
@@ -134,7 +128,7 @@ for i in range(num_generations):
 
     population = new_population.copy()
 
-end = time.time() - start
+end = time.perf_counter() - start
 
 print(f"Max fitness of generation {i+1} = {generations_metada[i]['max']:.2f} found in {end:.2f} secs")
 

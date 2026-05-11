@@ -22,18 +22,15 @@ def initial_population_replicated_gene(scheduling_sessions, usage_constraint, ge
         individual = []
 
         scheduling_mask = create_scheduling_mask(scheduling_sessions, usage_constraint, gene_size, nts, nu)
-        for j in range (0, gene_size): 
-            gene = []
+        for j in range (0, gene_size):
             schedule = np.empty((2, nts))
             for k in range(0, nts):
                 #print(f'{j} , {k}, {user}')
                 user = scheduling_mask[k]
                 schedule[0][k] = user
                 schedule[1][k] = scheduling_sessions[j][user][k] 
-            
-            gene.append(schedule)
 
-            individual.append(gene)
+            individual.append(schedule)
 
         population.append(individual)        
 
@@ -48,7 +45,6 @@ def initial_population_random(scheduling_sessions, usage_constraint, gene_size, 
 
         for j in range (0, gene_size): 
             usage_constraint_counter = usage_constraint.copy()
-            gene = []
             schedule = np.empty((2, nts))
             for k in range(0, nts):
                 user = rand.randint(0, nu - 1)
@@ -59,10 +55,8 @@ def initial_population_random(scheduling_sessions, usage_constraint, gene_size, 
                 #print(f'{j} , {k}, {user}')
                 schedule[0][k] = user
                 schedule[1][k] = scheduling_sessions[j][user][k] 
-            
-            gene.append(schedule)
 
-            individual.append(gene)
+            individual.append(schedule)
 
 
         population.append(individual)        
@@ -85,10 +79,10 @@ def print_individual(individual, gene_size, dna):
     for j in range(0, gene_size):
     
         for k in range (0, dna):
-            print(f'{int(individual[j][0][0][k]): >4} |', end="")
+            print(f'{int(individual[j][0][k]): >4} |', end="")
         print("")
         for k in range (0, dna):
-            print(f'{individual[j][0][1][k]:.2f} |', end="")
+            print(f'{individual[j][1][k]:.2f} |', end="")
 
         print("")
 
@@ -162,17 +156,17 @@ def crossover(population, elitism_rate, tournament_size, gene_size, population_s
             else: 
                 fit_child = fitness(child)
 
-                if(fit_child >= sorted_population[0][1]):
+                if(fit_child >= sorted_population[1]):
                     new_population.append(child)
                     sorted_population.pop(0)
                 else:
-                    new_population.append(sorted_population[0][0])
+                    new_population.append(sorted_population[0])
 
     return np.array(new_population)
 
 
 def gene_fitness(gene):
-    return np.sum([dna[0][1] for dna in gene])
+    return gene[:, 1].sum()
 
 
 def dominant_crossover(a, b, population, gene_size):
@@ -191,7 +185,7 @@ def dominant_crossover(a, b, population, gene_size):
         else: 
             child.append(gene_b)
     
-    return child
+    return np.array(child)
 
 def uniform_crossover(a, b, population, gene_size):
     a_gene_heritage = gene_size - 1
@@ -213,7 +207,7 @@ def uniform_crossover(a, b, population, gene_size):
             child.append(population[a][i])
             a_gene_heritage -= 1
     
-    return child
+    return np.array(child)
 
 
 def one_point_crossover(a, b, population, gene_size):
@@ -235,6 +229,9 @@ def one_point_crossover(a, b, population, gene_size):
 
         child1.append(population[gene_child1][i])
         child2.append(population[gene_child2][i])
+
+    child1 = np.array(child1)
+    child2 = np.array(child2)
 
     fitness_child1 = fitness(child1)
     fitness_child2 = fitness(child2)
@@ -267,6 +264,9 @@ def two_point_crossover(a, b, population, gene_size):
         child1.append(population[gene_child1][i])
         child2.append(population[gene_child2][i])
 
+    child1 = np.array(child1)
+    child2 = np.array(child2)
+
     fitness_child1 = fitness(child1)
     fitness_child2 = fitness(child2)
 
@@ -277,7 +277,7 @@ def two_point_crossover(a, b, population, gene_size):
 
 # Calcula fitness somando os User Rates a cada timeslot
 def fitness(individual):
-    return np.sum([gene[0][1] for gene in individual])
+    return individual[:, 1, :].sum()
 
 
 # Mutação que ocorre trocando duas sessões de lugar
@@ -344,8 +344,8 @@ def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
         while(timeslot_a == timeslot_b ):
             timeslot_b = rand.randint(0, dna - 1)
 
-        user_a = int(individual[i][0][0][timeslot_a])
-        user_b = int(individual[i][0][0][timeslot_b])
+        user_a = int(individual[i][0][timeslot_a])
+        user_b = int(individual[i][0][timeslot_b])
 
 
         new_rate_a = predicted_rates[i][user_a][timeslot_b]
@@ -355,11 +355,11 @@ def mutation_swap_timeslot(individual, predicted_rates, gene_size, dna):
         #print(f'    {user_a} and {user_b}')
         #print(f'    a: {predicted_rates[i][user_a][timeslot_a]} b:{predicted_rates[i][user_b][timeslot_b]}')
 
-        individual[i][0][0][timeslot_a] = user_b
-        individual[i][0][1][timeslot_a] = new_rate_b
+        individual[i][0][timeslot_a] = user_b
+        individual[i][1][timeslot_a] = new_rate_b
 
-        individual[i][0][0][timeslot_b] = user_a
-        individual[i][0][1][timeslot_b] = new_rate_a
+        individual[i][0][timeslot_b] = user_a
+        individual[i][1][timeslot_b] = new_rate_a
 
     return 
 

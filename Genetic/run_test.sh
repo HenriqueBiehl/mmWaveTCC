@@ -27,7 +27,7 @@ for i in $(seq 1 $runs); do
     total_time=$(echo "$total_time + $time" | bc)
     total_fitness=$(echo "$total_fitness + $fitness" | bc)
 
-    echo "Run $i -> fitness=$fitness | time=$time"
+    printf "Run %02d -> fitness=%s | time=%s\n" "$i" "$fitness" "$time"
 done
 
 avg_time=$(echo "scale=4; $total_time / $runs" | bc)
