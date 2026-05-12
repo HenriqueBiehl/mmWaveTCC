@@ -7,7 +7,7 @@ import random
 
 population_size = 30
 num_generations = 30000
-elitism_rate = 0.3
+elitism_rate = 0.1
 tournament_size = 2
 crossover_rate = 1.0
 mutation_rate = 0.15
@@ -25,6 +25,7 @@ parser.add_argument('-t', '--threshold', type=float, help='Threshold de converg�
 parser.add_argument('-meta ', '--metadata', action='store_true', help='Retorna, ao fim da execuçaõ, os metadados e parametors utilizados')
 parser.add_argument('-s', '--seed', action='store_true', help='Adicionar seed manualmente')
 parser.add_argument('-sv', '--seed_value', type=int, help='Valor da seed')
+parser.add_argument('-tl', '--time_limit', type=float, help='Limite de tempo')
 
 #Adicionar opcao -m que printa os metadados utilizados (tamanho populacao, geracoes, eltitimos, seed utilizada no programa, etc)
 #adiciona opcao -s que utiliza uma seed passada por argumento 
@@ -103,38 +104,70 @@ last_convergence = 0
 conv_count = 0
 start = time.perf_counter()
 
-gs.collect_generation_metadata(generations_metada, population, population_size)
+if args.plot: gs.collect_generation_metadata(generations_metada, population, population_size)
 
 new_population = population_copy
-for i in range(num_generations):
-    r = random.uniform(0, 1)
-    if(r < crossover_rate):
-        new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "roulette", "one-point", "renewall")
-    
-    new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
+if args.time_limit == None:
+    for i in range(num_generations):
+        r = random.uniform(0, 1)
+        if(r < crossover_rate):
+            new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "roulette", "one-point", "renewall")
+        
+        new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
-    gs.collect_generation_metadata(generations_metada, new_population, population_size)
-    
-    if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold, last_convergence)):
-        print(f"GEN {i}: Convergence detected")
-        gs.print_one_generation(generations_metada[i])
-        new_population = gs.hypermutation(new_population, scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu, 0.5)
-        last_convergence = i
-        conv_count += 1
+        if (args.plot) or (i == num_generations-1): gs.collect_generation_metadata(generations_metada, new_population, population_size)
+        
+        if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold, last_convergence)):
+            print(f"GEN {i}: Convergence detected")
+            gs.print_one_generation(generations_metada[i])
+            new_population = gs.hypermutation(new_population, scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu, 0.5)
+            last_convergence = i
+            conv_count += 1
 
-    # Hipermutação no max max_conv vezes, depois para o algoritmo pela convergencia
-    if conv_count == args.max_conv:
-        break
+        # Hipermutação no max max_conv vezes, depois para o algoritmo pela convergencia
+        if conv_count == args.max_conv:
+            break
 
-    population = new_population.copy()
+        population = new_population.copy()
+else:
+    i = 0
+    while(True):
+        r = random.uniform(0, 1)
+        if(r < crossover_rate):
+            new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_size, population_size, nts, "roulette", "one-point", "renewall")
+        
+        new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
+
+        if (args.plot): gs.collect_generation_metadata(generations_metada, new_population, population_size)
+        
+        if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold, last_convergence)):
+            print(f"GEN {i}: Convergence detected")
+            gs.print_one_generation(generations_metada[i])
+            new_population = gs.hypermutation(new_population, scheduling_sesssions.copy(), user_nts_constraint.copy(), gene_size, population_size, nts, nu, 0.5)
+            last_convergence = i
+            conv_count += 1
+
+        # Hipermutação no max max_conv vezes, depois para o algoritmo pela convergencia
+        if conv_count == args.max_conv:
+            break
+
+        population = new_population.copy()
+        i += 1
+
+        elapsed_time  = time.perf_counter() - start
+        if elapsed_time >= args.time_limit:
+            gs.collect_generation_metadata(generations_metada, new_population, population_size)
+            break
 
 end = time.perf_counter() - start
 
-print(f"Max fitness of generation {i+1} = {generations_metada[i]['max']:.2f} found in {end:.2f} secs")
-
-with open("metadata.txt", "w") as metadataFile:
-    for g in generations_metada:
-        metadataFile.write(f"{g['low']:.2f} - {g['avg']:.2f} - {g['max']:.2f}\n")
+if args.plot:
+    print(f"Max fitness of generation {i+1} = {generations_metada[i]['max']:.2f} found in {end:.2f} secs")
+    with open("metadata.txt", "w") as metadataFile:
+        for g in generations_metada:
+            metadataFile.write(f"{g['low']:.2f} - {g['avg']:.2f} - {g['max']:.2f}\n")
+else:
+    print(f"Max fitness of generation {i+1} = {generations_metada[0]['max']:.2f} found in {end:.2f} secs")
 
 # print("Final Population:")
 # gs.print_population(new_population, population_size, gene_size,  nts)
