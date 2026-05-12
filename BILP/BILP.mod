@@ -39,6 +39,8 @@ subject to {
 main {
   thisOplModel.generate();
 
+  cplex.workmem = 2048;
+
   cplex.solve();
   writeln("Objective = ", cplex.getObjValue())
   writeln("x = ", thisOplModel.x);

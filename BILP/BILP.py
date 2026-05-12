@@ -2,7 +2,7 @@
 
 import subprocess, os.path, re, argparse, time
 
-def runner(DATA_PATH):
+def runner(DATA_PATH, show_x):
     OPLRUN_PATH="/opt/ibm/ILOG/CPLEX_Studio2212/opl/bin/x86-64_linux/oplrun"
     MODEL_PATH="./BILP.mod"
 
@@ -25,31 +25,41 @@ def runner(DATA_PATH):
             objective = float(match.group(1))
             x = match.group(2)
 
-            print(f"Objective = {objective:.2f} - x = {x}")
+            if show_x: print(f"Objective = {objective:.2f} - x = {x}")
+            else: print(f"Objective = {objective:.2f}")
         else:
             print("ERRO!!!!! Cheque output.txt")
+            exit(0)
+
+    return objective
 
 def main():
     # Parseia entrada do programa
     parser = argparse.ArgumentParser(description="Algoritmo BILP de Escalonamento em Redes mmWave")
     parser.add_argument('-d', '--dir', help='Executa todos os arquivos de um diretorio')
+    parser.add_argument('-f', '--file', help='Executa todos os arquivos de um diretorio')
+    parser.add_argument('-x', '--x_result', action="store_true", help='Mostra o escalonamento final')
     args = parser.parse_args()
 
-    start = time.time()
+    start = time.perf_counter()
 
+    obj = 0
     if args.dir:
         folderPath = args.dir
         for root, _, files in os.walk(folderPath, topdown=True):
             files.sort()
             for name in files:
                 fileName = os.path.join(root, name)
-                runner(fileName)
+                obj += runner(fileName, args.x_result)
+    elif args.file:
+        obj = runner(args.file, args.x_result)
     else:
-        runner('BILP.dat')
+        obj = runner('BILP.dat', args.x_result)
 
-    end = time.time() - start
+    end = time.perf_counter() - start
 
-    print(f"Results found in {end} secs")
+    print(f"Total Objective = {obj} Gbps")
+    print(f"Results found in {end:.4f} secs")
 
 if __name__ == '__main__':
     main()
