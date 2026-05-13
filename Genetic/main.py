@@ -5,9 +5,9 @@ import sys, argparse, time
 import random  
 
 
-population_size = 30
+population_size = 5
 num_generations = 30000
-elitism_rate = 0.1
+elitism_rate = 0.2
 tournament_size = 2
 crossover_rate = 1.0
 mutation_rate = 0.15
@@ -104,7 +104,7 @@ last_convergence = 0
 conv_count = 0
 start = time.perf_counter()
 
-if args.plot: gs.collect_generation_metadata(generations_metada, population, population_size)
+if (args.plot) or (args.convergence): gs.collect_generation_metadata(generations_metada, population, population_size)
 
 new_population = population_copy
 if args.time_limit == None:
@@ -115,7 +115,7 @@ if args.time_limit == None:
         
         new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
-        if (args.plot) or (i == num_generations-1): gs.collect_generation_metadata(generations_metada, new_population, population_size)
+        if (args.plot) or (args.convergence) or (i == num_generations-1): gs.collect_generation_metadata(generations_metada, new_population, population_size)
         
         if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold, last_convergence)):
             print(f"GEN {i}: Convergence detected")
@@ -138,7 +138,7 @@ else:
         
         new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_size, population_size, nts)
 
-        if (args.plot): gs.collect_generation_metadata(generations_metada, new_population, population_size)
+        if (args.plot) or (args.convergence): gs.collect_generation_metadata(generations_metada, new_population, population_size)
         
         if (args.convergence) and (gs.check_convergence(generations_metada, i, args.generations, args.threshold, last_convergence)):
             print(f"GEN {i}: Convergence detected")
