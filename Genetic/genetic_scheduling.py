@@ -87,17 +87,22 @@ def print_individual(individual, gene_size, dna):
         print("")
 
 
-def roulette_selection(fitness_values):
-    return rand.choices(range(len(fitness_values)), weights=fitness_values, k=1)[0]
+def roulette_selection(fitness_values, n=2):
+    return rand.choices(range(len(fitness_values)), weights=fitness_values, k=n)
 
 
 def tournament_selection(population, fitness_values, tournament_size):
     indices = rand.sample(range(len(population)), tournament_size)
     return max(indices, key=lambda i: fitness_values[i])
 
+def fitness_batch(population):
+    # population[:, :, 1, :] seleciona o índice 1 do eixo 2 para TODOS os indivíduos
+    # shape: (pop_size, x, z) → soma em todos os eixos exceto o primeiro
+    return population[:, :, 1, :].sum(axis=(1, 2))
+
 
 def crossover(population, elitism_rate, tournament_size, gene_size, population_size, dna, selection_type, crossover_type, child_selection):
-    fitness_values = [fitness(ind) for ind in population]
+    fitness_values = fitness_batch(population)
 
     elite_size = int(elitism_rate * population_size)
     elite = sorted(zip(population, fitness_values), key=lambda x: x[1], reverse=True)
@@ -116,8 +121,7 @@ def crossover(population, elitism_rate, tournament_size, gene_size, population_s
             b = rand.randint(0, population_size-1)
 
         elif selection_type == "roulette":
-            a = roulette_selection(fitness_values)
-            b = roulette_selection(fitness_values)
+            a, b = roulette_selection(fitness_values)
 
         elif selection_type == "tournament":
             a = tournament_selection(population, fitness_values, tournament_size)
@@ -238,7 +242,6 @@ def one_point_crossover(a, b, population, gene_size):
 
     if(fitness_child1 >= fitness_child2):
         return child1
-    
     return child2
 
 
@@ -424,7 +427,7 @@ def hypermutation(population, scheduling_sessions, usage_constraint, gene_size, 
     discarded_size = int(population_size * discarded_percent)
 
     # Calcula fitness direto em array numpy (sem dict)
-    fitness_values = np.array([fitness(ind) for ind in population])
+    fitness_values = fitness_batch(population)
 
     # Pega índices ordenados (menor fitness primeiro)
     sorted_idx = np.argsort(fitness_values)
