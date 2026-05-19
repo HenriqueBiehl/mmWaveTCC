@@ -22,7 +22,7 @@ parser.add_argument('-c', '--convergence', action='store_true', help='Para o pro
 parser.add_argument('-g', '--generations', type=int, help='Número de gerações para análise de convergência')
 parser.add_argument('-mc', '--max_conv', type=int, help='Número máximo de vezes que irá convergir antes de parar')
 parser.add_argument('-t', '--threshold', type=float, help='Threshold de convergência')
-parser.add_argument('-meta ', '--metadata', action='store_true', help='Retorna, ao fim da execuçaõ, os metadados e parametors utilizados')
+parser.add_argument('-meta ', '--metadata', action='store_true', help='Retorna, ao fim da execução, os metadados e parametros utilizados')
 parser.add_argument('-s', '--seed', action='store_true', help='Adicionar seed manualmente')
 parser.add_argument('-sv', '--seed_value', type=int, help='Valor da seed')
 parser.add_argument('-tl', '--time_limit', type=float, help='Limite de tempo')
