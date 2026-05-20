@@ -1,0 +1,177 @@
+
+1st Run - 10 pop - 100000 Gen - 0.3 mutation - no time limit
+Run 01 -> fitness=203560.63 | time=91.04
+Run 02 -> fitness=203882.82 | time=97.70
+Run 03 -> fitness=203575.81 | time=93.84
+Run 04 -> fitness=203578.05 | time=94.17
+Run 05 -> fitness=204046.34 | time=95.23
+Run 06 -> fitness=203791.97 | time=95.73
+Run 07 -> fitness=203930.75 | time=94.85
+Run 08 -> fitness=203314.33 | time=96.57
+Run 09 -> fitness=203474.32 | time=95.02
+Run 10 -> fitness=203576.44 | time=94.07
+Run 11 -> fitness=203762.12 | time=81.35
+Run 12 -> fitness=203843.29 | time=81.36
+Run 13 -> fitness=203376.71 | time=94.01
+Run 14 -> fitness=203347.20 | time=93.80
+Run 15 -> fitness=203658.49 | time=93.91
+Run 16 -> fitness=203398.56 | time=93.62
+Run 17 -> fitness=203611.50 | time=93.53
+Run 18 -> fitness=203953.10 | time=94.20
+Run 19 -> fitness=203301.18 | time=94.37
+Run 20 -> fitness=203940.76 | time=94.32
+Run 21 -> fitness=203907.85 | time=94.53
+Run 22 -> fitness=203617.28 | time=92.86
+Run 23 -> fitness=203795.71 | time=93.32
+Run 24 -> fitness=204098.55 | time=93.86
+Run 25 -> fitness=203711.75 | time=94.34
+Run 26 -> fitness=203629.53 | time=82.31
+Run 27 -> fitness=203601.37 | time=93.25
+Run 28 -> fitness=203454.30 | time=93.99
+Run 29 -> fitness=203767.31 | time=93.86
+Run 30 -> fitness=203467.53 | time=93.75
+----------------------
+Média do tempo: 92.9586 secs
+Média do fitness: 203665.8516 Gbps
+
+2nd Run - 10 pop - 100000 Gen - 0.15 mutation - no time limit
+Run 01 -> fitness=209977.01 | time=96.89
+Run 02 -> fitness=209936.62 | time=98.23
+Run 03 -> fitness=209926.92 | time=97.08
+Run 04 -> fitness=209926.94 | time=97.15
+Run 05 -> fitness=209898.34 | time=96.22
+Run 06 -> fitness=210086.35 | time=96.72
+Run 07 -> fitness=209856.80 | time=96.45
+Run 08 -> fitness=209994.95 | time=95.82
+Run 09 -> fitness=210194.51 | time=96.21
+Run 10 -> fitness=209814.31 | time=96.58
+Run 11 -> fitness=210001.31 | time=96.44
+Run 12 -> fitness=210010.55 | time=96.92
+Run 13 -> fitness=209964.07 | time=96.83
+Run 14 -> fitness=210246.67 | time=96.35
+Run 15 -> fitness=209987.84 | time=96.03
+Run 16 -> fitness=209806.38 | time=96.24
+Run 17 -> fitness=209756.92 | time=96.98
+Run 18 -> fitness=209970.22 | time=96.14
+Run 19 -> fitness=209787.97 | time=95.79
+Run 20 -> fitness=209936.04 | time=96.58
+Run 21 -> fitness=209863.04 | time=95.97
+Run 22 -> fitness=210022.45 | time=96.16
+Run 23 -> fitness=210092.85 | time=95.88
+Run 24 -> fitness=210342.96 | time=96.82
+Run 25 -> fitness=210013.98 | time=95.86
+Run 26 -> fitness=209895.39 | time=96.39
+Run 27 -> fitness=210163.35 | time=96.12
+Run 28 -> fitness=209756.38 | time=97.00
+Run 29 -> fitness=209898.12 | time=83.68
+Run 30 -> fitness=210259.34 | time=96.74
+----------------------
+Média do tempo: 96.0756 secs
+Média do fitness: 209979.6193 Gbps
+
+
+3rd run 10 pop - 100000 Gen - 0.3 mutation - 5 second time limit
+Run 01 -> fitness=178900.79 | time=5.00
+Run 02 -> fitness=178834.55 | time=5.00
+Run 03 -> fitness=176978.45 | time=5.00
+Run 04 -> fitness=173760.39 | time=5.00
+Run 05 -> fitness=174875.01 | time=5.00
+Run 06 -> fitness=177363.38 | time=5.00
+Run 07 -> fitness=177807.30 | time=5.00
+Run 08 -> fitness=177530.09 | time=5.00
+Run 09 -> fitness=177527.61 | time=5.00
+Run 10 -> fitness=177987.05 | time=5.00
+Run 11 -> fitness=178041.43 | time=5.00
+Run 12 -> fitness=177995.29 | time=5.00
+Run 13 -> fitness=177755.96 | time=5.00
+Run 14 -> fitness=178071.10 | time=5.00
+Run 15 -> fitness=177795.84 | time=5.00
+Run 16 -> fitness=178342.99 | time=5.00
+Run 17 -> fitness=178400.68 | time=5.00
+Run 18 -> fitness=178033.83 | time=5.00
+Run 19 -> fitness=176804.14 | time=5.00
+Run 20 -> fitness=178110.15 | time=5.00
+Run 21 -> fitness=177766.89 | time=5.00
+Run 22 -> fitness=177655.40 | time=5.00
+Run 23 -> fitness=177867.04 | time=5.00
+Run 24 -> fitness=177756.39 | time=5.00
+Run 25 -> fitness=178260.10 | time=5.00
+Run 26 -> fitness=178428.51 | time=5.00
+Run 27 -> fitness=178021.76 | time=5.00
+Run 28 -> fitness=177865.64 | time=5.00
+Run 29 -> fitness=177948.32 | time=5.00
+Run 30 -> fitness=178353.68 | time=5.00
+----------------------
+Média do tempo: 5.0000 secs
+Média do fitness: 177694.6586 Gbps
+
+4th run 10 pop - 100000 Gen - 0.3 mutation - 8 second time limit
+Run 01 -> fitness=185861.86 | time=8.00
+Run 02 -> fitness=183972.67 | time=8.00
+Run 03 -> fitness=186001.95 | time=8.00
+Run 04 -> fitness=184859.43 | time=8.00
+Run 05 -> fitness=185398.51 | time=8.00
+Run 06 -> fitness=185623.16 | time=8.00
+Run 07 -> fitness=186342.15 | time=8.00
+Run 08 -> fitness=185724.78 | time=8.00
+Run 09 -> fitness=185438.02 | time=8.00
+Run 10 -> fitness=185808.42 | time=8.00
+Run 11 -> fitness=186112.03 | time=8.00
+Run 12 -> fitness=186034.57 | time=8.00
+Run 13 -> fitness=185923.35 | time=8.00
+Run 14 -> fitness=185984.02 | time=8.00
+Run 15 -> fitness=186153.57 | time=8.00
+Run 16 -> fitness=185311.34 | time=8.00
+Run 17 -> fitness=185962.34 | time=8.00
+Run 18 -> fitness=186336.33 | time=8.00
+Run 19 -> fitness=186265.83 | time=8.00
+Run 20 -> fitness=185376.89 | time=8.00
+Run 21 -> fitness=186156.08 | time=8.00
+Run 22 -> fitness=186175.33 | time=8.00
+Run 23 -> fitness=185249.16 | time=8.00
+Run 24 -> fitness=185914.71 | time=8.00
+Run 25 -> fitness=185695.70 | time=8.00
+Run 26 -> fitness=185449.89 | time=8.00
+Run 27 -> fitness=185036.03 | time=8.00
+Run 28 -> fitness=185941.71 | time=8.00
+Run 29 -> fitness=185985.57 | time=8.00
+Run 30 -> fitness=186159.28 | time=8.00
+----------------------
+Média do tempo: 8.0000 secs
+Média do fitness: 185741.8226 Gbps
+
+5th run 10 pop - 100000 Gen - 0.30 mutation - 1.5 second time limit
+Run 01 -> fitness=146518.49 | time=1.50
+Run 02 -> fitness=147476.18 | time=1.50
+Run 03 -> fitness=145071.37 | time=1.50
+Run 04 -> fitness=145734.30 | time=1.50
+Run 05 -> fitness=146542.42 | time=1.50
+Run 06 -> fitness=147132.11 | time=1.50
+Run 07 -> fitness=146621.69 | time=1.50
+Run 08 -> fitness=146668.41 | time=1.50
+Run 09 -> fitness=147494.78 | time=1.50
+Run 10 -> fitness=146558.23 | time=1.50
+Run 11 -> fitness=145911.16 | time=1.50
+Run 12 -> fitness=146715.13 | time=1.50
+Run 13 -> fitness=146356.03 | time=1.50
+Run 14 -> fitness=146843.79 | time=1.50
+Run 15 -> fitness=145589.96 | time=1.50
+Run 16 -> fitness=146009.58 | time=1.50
+Run 17 -> fitness=146605.38 | time=1.50
+Run 18 -> fitness=145120.67 | time=1.50
+Run 19 -> fitness=144238.65 | time=1.50
+Run 20 -> fitness=145441.66 | time=1.50
+Run 21 -> fitness=143863.47 | time=1.50
+Run 22 -> fitness=139974.59 | time=1.50
+Run 23 -> fitness=143028.48 | time=1.50
+Run 24 -> fitness=146138.02 | time=1.50
+Run 25 -> fitness=145801.48 | time=1.50
+Run 26 -> fitness=145681.30 | time=1.50
+Run 27 -> fitness=146494.87 | time=1.50
+Run 28 -> fitness=145712.22 | time=1.50
+Run 29 -> fitness=146147.70 | time=1.50
+Run 30 -> fitness=145787.48 | time=1.50
+----------------------
+Média do tempo: 1.5000 secs
+Média do fitness: 145775.9866 Gbps
+
