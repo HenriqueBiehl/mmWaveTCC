@@ -10,7 +10,7 @@ num_generations = 100000
 elitism_rate = 0.2
 tournament_size = 2
 crossover_rate = 1.0
-mutation_rate = 0.15
+mutation_rate = 0.3
 
 generations_metada = []
 generations_metada_p2 = []
@@ -27,6 +27,10 @@ parser.add_argument('-meta ', '--metadata', action='store_true', help='Retorna, 
 parser.add_argument('-s', '--seed', action='store_true', help='Adicionar seed manualmente')
 parser.add_argument('-sv', '--seed_value', type=int, help='Valor da seed')
 parser.add_argument('-tl', '--time_limit', type=float, help='Limite de tempo')
+parser.add_argument('-m', '--mutation', type=float, help='Taxa de mutação')
+parser.add_argument('-pop', '--population', type=int, help='Tamanho população')
+parser.add_argument('-gen', '--max_gen', type=int, help='Quantidade de gerações')
+
 
 #Adicionar opcao -m que printa os metadados utilizados (tamanho populacao, geracoes, eltitimos, seed utilizada no programa, etc)
 #adiciona opcao -s que utiliza uma seed passada por argumento 
@@ -48,6 +52,14 @@ else:
 
 random.seed(exec_seed)
 
+if args.mutation:
+    mutation_rate = args.mutation 
+
+if args.population: 
+    population_size = args.population
+
+if args.max_gen:
+    num_generations = args.max_gen
 
 # Lê toda a entrada do arquivo ou stdin  
 dados = sys.stdin.read().split()
@@ -106,7 +118,11 @@ population2_copy = population2.copy()
 # gs.print_population(population, population_size, gene_size,  nts)
 # print("")
 
-print("Crossover using Roulette, Session Swap Mutation and One-Point Crossover")
+print("Crossover using Roulette, Timeslot Mutation and One-Point Crossover")
+print(f"    Total Generations   : {num_generations}")
+print(f"    Population Size     : {population_size}")
+print(f"    Mutation rate       : {mutation_rate}")
+ 
 last_convergence = 0
 conv_count = 0
 start = time.perf_counter()
@@ -123,8 +139,8 @@ if args.time_limit == None:
             new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_pop1, population_size, nts, "roulette", "one-point", "renewall")
             new_population2 = gs.crossover(population2, elitism_rate, tournament_size,  gene_pop2, population_size, nts, "roulette", "one-point", "renewall")     
 
-        new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_pop1, population_size, nts)
-        new_population2 = gs.timeslot_mutation(new_population2, scheduling_sesssions, mutation_rate, gene_pop2, population_size, nts)
+        new_population = gs.timeslot_mutation(new_population, scheduling_sesssions[gene_pop1:], mutation_rate, gene_pop1, population_size, nts)
+        new_population2 = gs.timeslot_mutation(new_population2, scheduling_sesssions[:gene_pop2], mutation_rate, gene_pop2, population_size, nts)
 
         if (args.plot) or (args.convergence) or (i == num_generations-1): 
             gs.collect_generation_metadata(generations_metada, new_population, population_size)
@@ -150,9 +166,9 @@ else:
         if(r < crossover_rate):
             new_population = gs.crossover(population, elitism_rate, tournament_size,  gene_pop1, population_size, nts, "roulette", "one-point", "renewall")
             new_population2 = gs.crossover(population2, elitism_rate, tournament_size,  gene_pop2, population_size, nts, "roulette", "one-point", "renewall")     
-
-        new_population = gs.timeslot_mutation(new_population, scheduling_sesssions, mutation_rate, gene_pop1, population_size, nts)
-        new_population2 = gs.timeslot_mutation(new_population2, scheduling_sesssions, mutation_rate, gene_pop2, population_size, nts)
+        
+        new_population = gs.timeslot_mutation(new_population, scheduling_sesssions[gene_pop1:], mutation_rate, gene_pop1, population_size, nts)
+        new_population2 = gs.timeslot_mutation(new_population2, scheduling_sesssions[:gene_pop2], mutation_rate, gene_pop2, population_size, nts)
 
         if (args.plot) or (args.convergence) or (i == num_generations-1): 
             gs.collect_generation_metadata(generations_metada, new_population, population_size)

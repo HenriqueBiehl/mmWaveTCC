@@ -12,7 +12,7 @@ fi
 input_file=$1
 
 for i in $(seq 1 $runs); do
-    output=$(python3 main_duplicate.py  < "$input_file")
+    output=$(python3 main_duplicate.py < "$input_file")
 
     # Pega só a última linha relevante
     line=$(echo "$output" | grep "Max fitness")
