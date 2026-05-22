@@ -2,6 +2,19 @@ import numpy as np
 import random as rand
 
 
+def validate_scheduling(scheduling, usage_constraint, nts, nu):
+
+    user_usage_scheduling = [0]*nu
+
+    for i in range(nts): 
+        user_usage_scheduling[int(scheduling[i])] += 1
+    
+    for i in range(nu):
+        if(user_usage_scheduling[i] != usage_constraint[i]):
+            return 0
+
+    return 1; 
+
 def create_scheduling_mask(scheduling_sessions, usage_constraint, gene_size, nts, nu):
     scheduling_mask = []
     for j in range (0, gene_size): 
@@ -10,6 +23,7 @@ def create_scheduling_mask(scheduling_sessions, usage_constraint, gene_size, nts
             user = rand.randint(0, nu - 1)
             while (usage_constraint_counter[user] == 0):
                 user = rand.randint(0, nu - 1)
+            usage_constraint_counter[user] -= 1
             scheduling_mask.append(user)
     
     return scheduling_mask
@@ -378,12 +392,13 @@ def collect_generation_metadata(generation_metadata, population, population_size
         
         if f > max_fit:
             max_fit = f
+            max_ind = population[j]
         if f < lowest_fit:
             lowest_fit = f 
 
     avarege_fit /= population_size
 
-    gen_metadata = {"max": max_fit, "low": lowest_fit, "avg": avarege_fit}
+    gen_metadata = {"max": max_fit, "max_ind": max_ind, "low": lowest_fit, "avg": avarege_fit}
     generation_metadata.append(gen_metadata)
 
 

@@ -200,6 +200,21 @@ else:
 
 end = time.perf_counter() - start
 
+
+for i in range(gene_pop1):
+    if(not gs.validate_scheduling(generations_metada[0]['max_ind'][i][0], user_nts_constraint,nts, nu)):
+        print(f"Erro: scheduling {i} é inválido: ")
+        print(generations_metada[0]['max_ind'][i][0])
+        exit(1)
+
+for i in range(gene_pop2):
+    if(not gs.validate_scheduling(generations_metada[0]['max_ind'][i][0], user_nts_constraint, nts, nu)):
+        print(f"Erro: scheduling {i + gene_pop1} é inválido: ")
+        print(generations_metada[0]['max_ind'][i][0])
+        exit(1)
+
+print("Scheduling final válido!")
+
 if args.plot:
     print(f"Max fitness of generation {i+1} = {generations_metada[i]['max']:.2f} found in {end:.2f} secs")
     with open("metadata.txt", "w") as metadataFile:
