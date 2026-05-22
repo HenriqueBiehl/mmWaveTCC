@@ -196,11 +196,22 @@ else:
 
 end_time = time.perf_counter() - start_time
 
-for i in range(pop_division):
-    if(not gs.validate_scheduling(generations_metadata[0]['max_ind'][i][0], user_nts_constraint,nts, nu)):
-        print(f"Erro: scheduling {i} é inválido: ")
-        print(generations_metadata[0]['max_ind'][i][0])
-        exit(1)
+if args.plot:
+    for p_ind in range(pop_division):
+        for i in range(gene_size // pop_division):
+            scheduling = generations_metadata[p_ind][gen]['max_ind'][i][0]
+            if(not gs.validate_scheduling(scheduling, user_nts_constraint,nts, nu)):
+                print(f"Erro: scheduling {p_ind} é inválido: ")
+                print(generations_metadata[0][0]['max_ind'][i][0])
+                exit(1)
+else:
+    for p_ind in range(pop_division):
+        for i in range(gene_size // pop_division):
+            scheduling = generations_metadata[p_ind][0]['max_ind'][i][0]
+            if(not gs.validate_scheduling(scheduling, user_nts_constraint,nts, nu)):
+                print(f"Erro: scheduling {p_ind} é inválido: ")
+                print(generations_metadata[0][0]['max_ind'][i][0])
+                exit(1)
 
 print("Scheduling final válido!")
 
@@ -235,24 +246,20 @@ if args.finalind:
     maxIndvs = []
 
     print("Maximal individuals:")
-    for ind in range(population_size):
-        # reconstrói indivíduo completo
-        full_individual = []
+    full_individual = []
 
+    if args.plot:
         for p_ind in range(pop_division):
-            full_individual.extend(population[p_ind][ind])
+            full_individual.extend(generations_metadata[p_ind][gen]['max_ind'])
+    else:
+        for p_ind in range(pop_division):
+            full_individual.extend(generations_metadata[p_ind][0]['max_ind'])
 
-        full_individual = np.array(full_individual)
-        nao_pertence = not any(np.array_equal(full_individual, x) for x in maxIndvs)
-        is_max = np.isclose(gs.fitness(full_individual), max_fitness)
-        
-        if is_max and nao_pertence:
-            maxIndvs.append(full_individual)
-            print("\t", end="")
-            for j in range(gene_size):
-                print(f"{full_individual[j][0]}", end="")
-
-            print("")
+    full_individual = np.array(full_individual)
+    print("\t", end="")
+    for j in range(gene_size):
+        print(f"{full_individual[j][0]}", end="")
+    print("")
 
 if args.plot:
     cPlot.plotFitness()
