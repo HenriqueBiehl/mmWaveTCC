@@ -181,12 +181,20 @@ if args.finalind:
     for p in population:
         nao_pertence = not any(np.array_equal(p, x) for x in maxIndvs)
 
-        if (gs.fitness(p) == generations_metada[i]["max"]) and nao_pertence:
-            maxIndvs.append(p)
-            print("\t", end="")
-            for j in range(gene_size):
-                print(f"{p[j][0][0]}", end="")
-            print("")
+        if args.plot:
+            if (gs.fitness(p) == generations_metada[idx]["max"]) and nao_pertence:
+                maxIndvs.append(p)
+                print("\t", end="")
+                for j in range(gene_size):
+                    print(f"{p[j][0]}", end="")
+                print("")
+        else:
+            if (gs.fitness(p) == generations_metada[0]["max"]) and nao_pertence:
+                maxIndvs.append(p)
+                print("\t", end="")
+                for j in range(gene_size):
+                    print(f"{p[j][0]}", end="")
+                print("")
 
 if args.plot:
     cPlot.plotFitness()
