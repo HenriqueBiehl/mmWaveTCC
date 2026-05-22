@@ -103,9 +103,12 @@ generations_metadata = []
 for i in range(pop_division):
     generations_metadata.append([])
 
+base = gene_size // pop_division
+rest = gene_size % pop_division
 gene_pop = []
 for i in range(pop_division):
-    gene_pop.append(gene_size // pop_division)
+    if i < rest: gene_pop.append(base + 1)
+    else: gene_pop.append(base)
 
 print("Scheduling session aggregation:")
 print(scheduling_sesssions)
