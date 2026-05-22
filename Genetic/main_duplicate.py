@@ -201,7 +201,7 @@ end_time = time.perf_counter() - start_time
 
 if args.plot:
     for p_ind in range(pop_division):
-        for i in range(gene_size // pop_division):
+        for i in range(gene_pop[p_ind]):
             scheduling = generations_metadata[p_ind][gen]['max_ind'][i][0]
             if(not gs.validate_scheduling(scheduling, user_nts_constraint,nts, nu)):
                 print(f"Erro: scheduling {p_ind + i} é inválido: ")
@@ -209,7 +209,7 @@ if args.plot:
                 exit(1)
 else:
     for p_ind in range(pop_division):
-        for i in range(gene_size // pop_division):
+        for i in range(gene_pop[p_ind]):
             scheduling = generations_metadata[p_ind][0]['max_ind'][i][0]
             if(not gs.validate_scheduling(scheduling, user_nts_constraint,nts, nu)):
                 print(f"Erro: scheduling {p_ind + i} é inválido: ")
