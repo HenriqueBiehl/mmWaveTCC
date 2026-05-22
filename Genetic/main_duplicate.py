@@ -201,16 +201,16 @@ if args.plot:
         for i in range(gene_size // pop_division):
             scheduling = generations_metadata[p_ind][gen]['max_ind'][i][0]
             if(not gs.validate_scheduling(scheduling, user_nts_constraint,nts, nu)):
-                print(f"Erro: scheduling {p_ind} é inválido: ")
-                print(generations_metadata[0][0]['max_ind'][i][0])
+                print(f"Erro: scheduling {p_ind + i} é inválido: ")
+                print(scheduling)
                 exit(1)
 else:
     for p_ind in range(pop_division):
         for i in range(gene_size // pop_division):
             scheduling = generations_metadata[p_ind][0]['max_ind'][i][0]
             if(not gs.validate_scheduling(scheduling, user_nts_constraint,nts, nu)):
-                print(f"Erro: scheduling {p_ind} é inválido: ")
-                print(generations_metadata[0][0]['max_ind'][i][0])
+                print(f"Erro: scheduling {p_ind + i} é inválido: ")
+                print(scheduling)
                 exit(1)
 
 print("Scheduling final válido!")
