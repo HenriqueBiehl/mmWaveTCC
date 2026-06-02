@@ -10,13 +10,12 @@ Este projeto se trata de um algoritmo ótimo para encontrar o escalonamento de u
 - `BILP.mod` preenchido
 
 ### 🐧 Instalando o IBM COS *NO LINUX* 
-- Crie uma conta em [https://www.ibm.com/br-pt](https://www.ibm.com/br-pt) e faça login na página
-- Acesse [esse](https://www.ibm.com/br-pt/products/ilog-cplex-optimization-studio) link e clique em "Experimente sem custo"
-- Na dashboard, na parte de Downloads, procure pelo IBM ILOG CPLEX Optimization Studio Free Edition e clique em "Download"
-- Na página da Box@IBM, escolha a versão a versão de Linux para baixar
+- Entre em [https://skillsbuild.org/pt-br/college-students](https://skillsbuild.org/pt-br/college-students) e clique em "ILOG CPLEX"
+- Use seu email da UFPR pra criar uma conta
+- Na dashboard, procure pelo IBM ILOG CPLEX e baixe-o
 - Após o Download, dê permissão de execução ao arquivo .bin com `chmod +x cos_installer_preview-x.x.x-linux-x86-64.bin`
 - Execute o arquivo pelo terminal com `./cos_installer_preview-x.x.x-linux-x86-64.bin`
-- Siga as instruções de instalação, SEM ALTERAR O LOCAL PADRÃO DE INSTALAÇÃO (`/opt/ibm/ILOG/CPLEX_Studio_Community2212/`)
+- Siga as instruções de instalação, SEM ALTERAR O LOCAL PADRÃO DE INSTALAÇÃO (`/opt/ibm/ILOG/CPLEX_Studio2212/`)
 
 ### 🤔 Por que não usar a IDE do OPL? 
 - Interface desnecessária que apenas consumiria tempo e recursos do sistema, considerando que temos uma alternativa na linha de comando

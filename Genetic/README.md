@@ -25,7 +25,7 @@ Este projeto se trata de um algoritmo bioinspirado para encontrar o escalonament
     - `-tl <time_limit>`: Executa o programa por `time_limit` segundos apenas e exibe o resultado alcançado nesse tempo
     - `-meta`: Retorna, ao fim da execução, os metadados e parâmetros utilizados
     - `-div <divisao>`: Divide o programa em `divisao` populações isoladas, desde que haja pelo menos 2 sessões pra cada população
--**modelagem.txt**: Arquivo explicando a modelagem da entrada e funcionamento do algoritmo principal
+- **modelagem.txt**: Arquivo explicando a modelagem da entrada e funcionamento do algoritmo principal
 - **out.txt**: Saídas do algoritmo usadas para comparação e acompanhamento da evolução do projeto
 - **tests.txt**: Saídas do algoritmo usadas para comparação e acompanhamento da evolução do projeto
 - **run_tests.sh**: Roda o programa 30x e relata as médias de tempo e de *bandwidth* das execuções
