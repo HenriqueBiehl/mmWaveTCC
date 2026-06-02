@@ -33,7 +33,7 @@ print(f'Total Users:{nu}')
 
 user_nts_constraint = np.empty(nu) 
 for i in range(0, nu):
-    user_nts_constraint[i] = dados[idx] 
+    user_nts_constraint[i] = int(dados[idx]) 
     idx += 1
 
 
@@ -92,5 +92,4 @@ for i in range(0, gene_size):
         exit(1)
 print("Scheduling final válido!")
 
-print(f"Max rate of greedy = {fitness(final_schedule)} found in {end_time:.2f} secs")
-
+print(f"Max rate of greedy = {fitness(final_schedule/(10**9))} found in {end_time:.2f} secs")
