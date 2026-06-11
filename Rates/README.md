@@ -1,4 +1,4 @@
-# Algoritmo Guloso Simples de Escalonamento em Redes mmWave
+# Algoritmo Gerador de Rates para Algoritmos de Escalonamento em Redes mmWave
 
 ## 📝 Projeto
 Este projeto se trata de um algoritmo gerador de rates de dispostivos para utilizar como entradas nos algoritmos de escalonamento em redes mmWave.
